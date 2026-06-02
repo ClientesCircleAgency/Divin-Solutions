@@ -23,7 +23,7 @@ import {
   processSteps,
 } from "./data";
 
-const scrubAsset = (path: string) => `${asset(path)}?v=20260602-performance`;
+const scrubAsset = (path: string) => `${asset(path)}?v=20260603-scroll-scrub`;
 const systemVisuals = [asset("scroll-frames/00-blueprint-start.jpg"), ...capabilities.map((capability) => capability.visual)];
 const riskItems = [
   {
@@ -66,7 +66,7 @@ function seekVideo(video: HTMLVideoElement | null, progress: number) {
 
   const clamped = Math.min(0.995, Math.max(0, progress));
   const targetTime = Math.min(video.duration - 0.04, clamped * video.duration);
-  if (Math.abs(video.currentTime - targetTime) < 0.025) {
+  if (Math.abs(video.currentTime - targetTime) < 0.012) {
     return;
   }
 
@@ -241,14 +241,14 @@ function Hero() {
     <section id="top" className="hero-section" ref={sectionRef}>
       <div className="hero-sticky">
         <picture className="hero-poster">
-          <source media="(max-width: 760px)" srcSet={scrubAsset("hero-video-01-reversed-1080-poster.jpg")} />
-          <img src={scrubAsset("hero-video-01-reversed-1080-poster.jpg")} alt="" />
+          <source media="(max-width: 760px)" srcSet={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")} />
+          <img src={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")} alt="" />
         </picture>
         <video
           ref={desktopVideoRef}
           className="hero-video desktop-video"
-          src={scrubAsset("hero-video-01-reversed-1080.mp4")}
-          poster={scrubAsset("hero-video-01-reversed-1080-poster.jpg")}
+          src={scrubAsset("hero-video-01-scroll-scrub-1080.mp4")}
+          poster={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")}
           muted
           playsInline
           preload="auto"
@@ -259,8 +259,8 @@ function Hero() {
         <video
           ref={mobileVideoRef}
           className="hero-video mobile-video"
-          src={scrubAsset("hero-video-01-reversed-1080.mp4")}
-          poster={scrubAsset("hero-video-01-reversed-1080-poster.jpg")}
+          src={scrubAsset("hero-video-01-scroll-scrub-1080.mp4")}
+          poster={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")}
           muted
           playsInline
           preload="auto"
