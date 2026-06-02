@@ -1,14 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { FormEvent } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
 import {
+  AlertTriangle,
   ArrowRight,
   ChevronDown,
+  FileWarning,
   Mail,
   Menu,
   Phone,
+  Route,
   Send,
+  UsersRound,
   X,
+  Wrench,
 } from "lucide-react";
 import {
   advantageItems,
@@ -18,8 +23,40 @@ import {
   processSteps,
 } from "./data";
 
-const scrubAsset = (path: string) => `${asset(path)}?v=20260601-scrub`;
-const systemVisuals = [asset("scroll-narrative-keyframes/00-before-no-supply.png"), ...capabilities.map((capability) => capability.visual)];
+const scrubAsset = (path: string) => `${asset(path)}?v=20260602-performance`;
+const systemVisuals = [asset("scroll-frames/00-blueprint-start.jpg"), ...capabilities.map((capability) => capability.visual)];
+const riskItems = [
+  {
+    index: "01",
+    title: "Missing materials",
+    copy: "Critical resources fail to arrive before crews are ready.",
+    icon: AlertTriangle,
+  },
+  {
+    index: "02",
+    title: "Equipment downtime",
+    copy: "Machinery gaps turn scheduled work fronts into idle time.",
+    icon: Wrench,
+  },
+  {
+    index: "03",
+    title: "Logistics bottlenecks",
+    copy: "Transport and supplier handoffs slow the whole chain.",
+    icon: Route,
+  },
+  {
+    index: "04",
+    title: "Documentation friction",
+    copy: "Certificates, HSE records and approvals block movement.",
+    icon: FileWarning,
+  },
+  {
+    index: "05",
+    title: "Workforce gaps",
+    copy: "Missing profiles leave capacity exposed between phases.",
+    icon: UsersRound,
+  },
+];
 
 function seekVideo(video: HTMLVideoElement | null, progress: number) {
   if (!video || !Number.isFinite(video.duration) || video.duration <= 0) {
@@ -39,6 +76,10 @@ function seekVideo(video: HTMLVideoElement | null, progress: number) {
   } catch {
     // Some browsers reject seeks before enough metadata is available.
   }
+}
+
+function Mark({ children }: { children: ReactNode }) {
+  return <span className="copy-mark">{children}</span>;
 }
 
 function useSteppedChapter() {
@@ -200,14 +241,14 @@ function Hero() {
     <section id="top" className="hero-section" ref={sectionRef}>
       <div className="hero-sticky">
         <picture className="hero-poster">
-          <source media="(max-width: 760px)" srcSet={scrubAsset("hero-video-01-reversed-poster.jpg")} />
-          <img src={scrubAsset("hero-video-01-reversed-poster.jpg")} alt="" />
+          <source media="(max-width: 760px)" srcSet={scrubAsset("hero-video-01-reversed-1080-poster.jpg")} />
+          <img src={scrubAsset("hero-video-01-reversed-1080-poster.jpg")} alt="" />
         </picture>
         <video
           ref={desktopVideoRef}
           className="hero-video desktop-video"
-          src={scrubAsset("hero-video-01-reversed.mp4")}
-          poster={scrubAsset("hero-video-01-reversed-poster.jpg")}
+          src={scrubAsset("hero-video-01-reversed-1080.mp4")}
+          poster={scrubAsset("hero-video-01-reversed-1080-poster.jpg")}
           muted
           playsInline
           preload="auto"
@@ -218,8 +259,8 @@ function Hero() {
         <video
           ref={mobileVideoRef}
           className="hero-video mobile-video"
-          src={scrubAsset("hero-video-01-reversed.mp4")}
-          poster={scrubAsset("hero-video-01-reversed-poster.jpg")}
+          src={scrubAsset("hero-video-01-reversed-1080.mp4")}
+          poster={scrubAsset("hero-video-01-reversed-1080-poster.jpg")}
           muted
           playsInline
           preload="auto"
@@ -236,10 +277,12 @@ function Hero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <p className="eyebrow">Construction Supply & Site Support</p>
-            <h1>Construction supply that keeps sites moving.</h1>
+            <h1>
+              Construction supply that keeps <Mark>sites moving</Mark>.
+            </h1>
             <p className="hero-lede">
-              Divin Solutions coordinates materials, machinery, site infrastructure, logistics, documentation and
-              operational support through one partner.
+              Divin Solutions coordinates <Mark>materials</Mark>, <Mark>machinery</Mark>, site infrastructure,
+              logistics, documentation and operational support through one partner.
             </p>
             <div className="hero-actions">
               <a href="#contact" className="button primary">
@@ -271,8 +314,8 @@ function SectionIntro({
   copy,
 }: {
   eyebrow: string;
-  title: string;
-  copy: string;
+  title: ReactNode;
+  copy: ReactNode;
 }) {
   return (
     <div className="section-intro">
@@ -289,25 +332,37 @@ function Problem() {
       <div className="page-grid two-col">
         <SectionIntro
           eyebrow="Procurement Risk"
-          title="Most delays start before the work front."
-          copy="Materials arrive from one supplier, machinery from another, documents from a third and site resources from someone else. When one piece fails, the entire schedule absorbs the delay."
+          title={
+            <>
+              Most delays start before the <Mark>work front</Mark>.
+            </>
+          }
+          copy={
+            <>
+              Materials arrive from one supplier, machinery from another, documents from a third and site resources from
+              someone else. When one piece fails, the entire <Mark>schedule absorbs the delay</Mark>.
+            </>
+          }
         />
         <div className="risk-grid">
-          {["Missing materials", "Equipment downtime", "Logistics bottlenecks", "Documentation friction", "Workforce gaps"].map(
-            (risk, index) => (
+          {riskItems.map((risk, index) => {
+            const Icon = risk.icon;
+            return (
               <motion.div
                 className="risk-card"
-                key={risk}
+                key={risk.title}
                 initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: index * 0.05 }}
               >
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <strong>{risk}</strong>
+                <Icon aria-hidden="true" className="risk-icon" strokeWidth={1.2} />
+                <span>{risk.index}</span>
+                <strong>{risk.title}</strong>
+                <p>{risk.copy}</p>
               </motion.div>
-            )
-          )}
+            );
+          })}
         </div>
       </div>
     </section>
@@ -374,8 +429,17 @@ function Capabilities() {
       <div className="page-grid">
         <SectionIntro
           eyebrow="Supply Capabilities"
-          title="Built around the realities of active construction sites."
-          copy="Each capability is designed around a practical operational pressure: what needs to be sourced, moved, documented, replaced or supported before the project loses time."
+          title={
+            <>
+              Built around the realities of <Mark>active construction sites</Mark>.
+            </>
+          }
+          copy={
+            <>
+              Each capability is designed around a practical operational pressure: what needs to be sourced, moved,
+              documented, replaced or supported before the project <Mark>loses time</Mark>.
+            </>
+          }
         />
         <div className="capability-workbench">
           <div className="capability-tabs" role="tablist" aria-label="Divin Solutions capabilities">
@@ -405,7 +469,7 @@ function Capabilities() {
               transition={{ duration: 0.35 }}
             >
               <div className="capability-image">
-                <img src={selected.detailVisual} alt="" />
+                <img src={selected.detailVisual} alt="" decoding="async" fetchPriority="high" />
               </div>
               <div className="capability-copy">
                 <p className="eyebrow">{selected.eyebrow}</p>
@@ -441,8 +505,17 @@ function Process() {
       <div className="page-grid">
         <SectionIntro
           eyebrow="Project Flow"
-          title="From requirement to site delivery, with fewer moving parts."
-          copy="The process gives project teams a single coordination layer across sourcing, logistics, documentation and support."
+          title={
+            <>
+              From requirement to site delivery, with <Mark>fewer moving parts</Mark>.
+            </>
+          }
+          copy={
+            <>
+              The process gives project teams a <Mark>single coordination layer</Mark> across sourcing, logistics,
+              documentation and support.
+            </>
+          }
         />
         <div className="process-line">
           {processSteps.map(([index, title, copy]) => (
@@ -464,8 +537,17 @@ function Advantage() {
       <div className="page-grid two-col">
         <SectionIntro
           eyebrow="Commercial Advantage"
-          title="Fewer moving parts. Stronger operational control."
-          copy="Instead of managing disconnected vendors, teams gain one point of coordination across the resources that keep the site active."
+          title={
+            <>
+              Fewer moving parts. Stronger <Mark>operational control</Mark>.
+            </>
+          }
+          copy={
+            <>
+              Instead of managing disconnected vendors, teams gain <Mark>one point of coordination</Mark> across the
+              resources that keep the site active.
+            </>
+          }
         />
         <div className="advantage-grid">
           {advantageItems.map(([title, copy, Icon]) => (
@@ -487,7 +569,9 @@ function Sustainability() {
       <div className="page-grid sustainability-inner">
         <div>
           <p className="eyebrow">Future-ready Site Support</p>
-          <h2>Site support aligned with modern environmental expectations.</h2>
+          <h2>
+            Site support aligned with modern <Mark>environmental expectations</Mark>.
+          </h2>
         </div>
         <div className="sustainability-points">
           {["LED site lighting", "Hybrid or low-carbon equipment", "Certified waste collection", "Environmental tracking"].map(
@@ -515,10 +599,12 @@ function Contact() {
       <div className="page-grid contact-grid">
         <div>
           <p className="eyebrow">Project Consultation</p>
-          <h2>Tell us what your project needs next.</h2>
+          <h2>
+            Tell us what your project <Mark>needs next</Mark>.
+          </h2>
           <p>
             Share the resources, site requirements or operational constraints you need to solve. Divin Solutions will
-            review the request and help define the right supply path.
+            review the request and help define the right <Mark>supply path</Mark>.
           </p>
           <div className="contact-methods">
             <span>
