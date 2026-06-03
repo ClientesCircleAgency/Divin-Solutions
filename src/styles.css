@@ -284,9 +284,8 @@ h2 .copy-mark {
   overflow: hidden;
 }
 
-.hero-poster,
-.hero-poster img,
-.hero-video,
+.hero-frame-stack,
+.hero-frame,
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -294,22 +293,24 @@ h2 .copy-mark {
   height: 100%;
 }
 
-.hero-poster img,
-.hero-video {
+.hero-frame {
   object-fit: cover;
   object-position: 58% center;
+  opacity: 0;
+  transform: scale(1.012);
+  transition:
+    opacity 320ms ease,
+    transform 900ms ease;
+  will-change: opacity, transform;
 }
 
-.hero-poster {
+.hero-frame-stack {
   z-index: 0;
 }
 
-.hero-video {
-  z-index: 1;
-}
-
-.mobile-video {
-  display: none;
+.hero-frame.active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .hero-overlay {
@@ -910,12 +911,8 @@ textarea:focus {
     font-size: clamp(2rem, 10vw, 3.3rem);
   }
 
-  .desktop-video {
-    display: none;
-  }
-
-  .mobile-video {
-    display: block;
+  .hero-frame {
+    object-position: 62% center;
   }
 
   .hero-overlay {

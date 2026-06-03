@@ -25,6 +25,13 @@ import {
 
 const scrubAsset = (path: string) => `${asset(path)}?v=20260603-scroll-scrub`;
 const systemVisuals = [asset("scroll-frames/00-blueprint-start.jpg"), ...capabilities.map((capability) => capability.visual)];
+const heroFrames = [
+  scrubAsset("hero-scroll-frames/00-before.webp"),
+  scrubAsset("hero-scroll-frames/01-emerging.webp"),
+  scrubAsset("hero-scroll-frames/02-supply-a.webp"),
+  scrubAsset("hero-scroll-frames/03-supply-b.webp"),
+  scrubAsset("hero-scroll-frames/04-supply-c.webp"),
+];
 const riskItems = [
   {
     index: "01",
@@ -57,26 +64,6 @@ const riskItems = [
     icon: UsersRound,
   },
 ];
-
-function seekVideo(video: HTMLVideoElement | null, progress: number) {
-  if (!video || !Number.isFinite(video.duration) || video.duration <= 0) {
-    video?.load();
-    return;
-  }
-
-  const clamped = Math.min(0.995, Math.max(0, progress));
-  const targetTime = Math.min(video.duration - 0.04, clamped * video.duration);
-  if (Math.abs(video.currentTime - targetTime) < 0.012) {
-    return;
-  }
-
-  try {
-    video.pause();
-    video.currentTime = targetTime;
-  } catch {
-    // Some browsers reject seeks before enough metadata is available.
-  }
-}
 
 function Mark({ children }: { children: ReactNode }) {
   return <span className="copy-mark">{children}</span>;
@@ -148,38 +135,23 @@ function useSteppedChapter() {
   return { active, sectionRef };
 }
 
-function useScrubbedHero() {
+function useHeroFrames() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
-  const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
+  const [frameProgress, setFrameProgress] = useState(0);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"],
   });
 
-  const syncVideos = () => {
-    const progress = scrollYProgress.get();
-    seekVideo(desktopVideoRef.current, progress);
-    seekVideo(mobileVideoRef.current, progress);
-  };
-
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (progress) => {
-      seekVideo(desktopVideoRef.current, progress);
-      seekVideo(mobileVideoRef.current, progress);
+      setFrameProgress(Math.min(heroFrames.length - 1, Math.max(0, progress * (heroFrames.length - 1))));
     });
 
     return () => unsubscribe();
   }, [scrollYProgress]);
 
-  useEffect(() => {
-    desktopVideoRef.current?.load();
-    mobileVideoRef.current?.load();
-    const frame = requestAnimationFrame(syncVideos);
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  return { sectionRef, desktopVideoRef, mobileVideoRef, syncVideos };
+  return { frameProgress, sectionRef };
 }
 
 function Nav() {
@@ -235,39 +207,28 @@ function Nav() {
 }
 
 function Hero() {
-  const { sectionRef, desktopVideoRef, mobileVideoRef, syncVideos } = useScrubbedHero();
+  const { frameProgress, sectionRef } = useHeroFrames();
 
   return (
     <section id="top" className="hero-section" ref={sectionRef}>
       <div className="hero-sticky">
-        <picture className="hero-poster">
-          <source media="(max-width: 760px)" srcSet={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")} />
-          <img src={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")} alt="" />
-        </picture>
-        <video
-          ref={desktopVideoRef}
-          className="hero-video desktop-video"
-          src={scrubAsset("hero-video-01-scroll-scrub-1080.mp4")}
-          poster={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")}
-          muted
-          playsInline
-          preload="auto"
-          onLoadedMetadata={syncVideos}
-          onLoadedData={syncVideos}
-          onCanPlay={syncVideos}
-        />
-        <video
-          ref={mobileVideoRef}
-          className="hero-video mobile-video"
-          src={scrubAsset("hero-video-01-scroll-scrub-1080.mp4")}
-          poster={scrubAsset("hero-video-01-scroll-scrub-poster.jpg")}
-          muted
-          playsInline
-          preload="auto"
-          onLoadedMetadata={syncVideos}
-          onLoadedData={syncVideos}
-          onCanPlay={syncVideos}
-        />
+        <div className="hero-frame-stack" aria-hidden="true">
+          {heroFrames.map((frame, index) => (
+            <img
+              key={frame}
+              className="hero-frame"
+              src={frame}
+              alt=""
+              decoding="async"
+              fetchPriority={index === 0 ? "high" : "low"}
+              loading={index === 0 ? "eager" : "lazy"}
+              style={{
+                opacity: Math.max(0, 1 - Math.abs(frameProgress - index)),
+                transform: `scale(${1.018 - Math.max(0, 1 - Math.abs(frameProgress - index)) * 0.01})`,
+              }}
+            />
+          ))}
+        </div>
         <div className="hero-overlay" />
         <div className="hero-content page-grid">
           <motion.div
