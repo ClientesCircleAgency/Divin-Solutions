@@ -192,12 +192,22 @@ h2 .copy-mark {
 
 .brand-symbol {
   display: grid;
-  width: 34px;
-  height: 34px;
+  width: 42px;
+  height: 42px;
   place-items: center;
-  border: 1px solid rgba(0, 175, 165, 0.42);
-  background: rgba(0, 175, 165, 0.09);
+  border: 1px solid rgba(0, 175, 165, 0.28);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(0, 175, 165, 0.12), transparent 68%),
+    rgba(0, 175, 165, 0.035);
   color: var(--mint);
+  overflow: hidden;
+}
+
+.brand-symbol img {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(0, 175, 165, 0.18));
 }
 
 .brand-mark strong {
@@ -774,6 +784,25 @@ h2 .copy-mark {
   gap: 72px;
 }
 
+.contact-brand {
+  display: grid;
+  width: 78px;
+  height: 78px;
+  place-items: center;
+  margin-bottom: 24px;
+  border: 1px solid rgba(214, 185, 140, 0.2);
+  background:
+    radial-gradient(circle at 50% 50%, rgba(214, 185, 140, 0.12), transparent 70%),
+    rgba(255, 255, 255, 0.025);
+}
+
+.contact-brand img {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  opacity: 0.92;
+}
+
 .contact-methods {
   display: grid;
   gap: 12px;
@@ -836,6 +865,7 @@ textarea:focus {
 
 .site-footer {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   gap: 20px;
   border-top: 1px solid var(--line);
@@ -843,6 +873,21 @@ textarea:focus {
   color: var(--soft);
   background: #050708;
   font-size: 0.86rem;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--white);
+  font-weight: 700;
+}
+
+.footer-brand img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  opacity: 0.86;
 }
 
 @media (max-width: 980px) {
@@ -999,6 +1044,16 @@ textarea:focus {
 
   .site-footer {
     display: grid;
+  }
+
+  .contact-brand {
+    width: 64px;
+    height: 64px;
+  }
+
+  .contact-brand img {
+    width: 48px;
+    height: 48px;
   }
 }
 

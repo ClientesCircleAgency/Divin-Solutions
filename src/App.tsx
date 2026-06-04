@@ -32,6 +32,10 @@ const heroFrames = [
   scrubAsset("hero-scroll-frames/03-supply-b.webp"),
   scrubAsset("hero-scroll-frames/04-supply-c.webp"),
 ];
+const brandLogo = {
+  champagne: asset("logo/edited/divin-logo-bege-transparent.webp"),
+  teal: asset("logo/edited/divin-logo-cyan-transparent.webp"),
+};
 const riskItems = [
   {
     index: "01",
@@ -161,7 +165,9 @@ function Nav() {
   return (
     <header className="nav-shell">
       <a href="#top" className="brand-mark" aria-label="Divin Solutions home">
-        <span className="brand-symbol">D</span>
+        <span className="brand-symbol">
+          <img src={brandLogo.teal} alt="" />
+        </span>
         <span>
           Divin
           <strong>Solutions</strong>
@@ -559,6 +565,9 @@ function Contact() {
     <section id="contact" className="section contact-section">
       <div className="page-grid contact-grid">
         <div>
+          <div className="contact-brand" aria-hidden="true">
+            <img src={brandLogo.champagne} alt="" />
+          </div>
           <p className="eyebrow">Project Consultation</p>
           <h2>
             Tell us what your project <Mark>needs next</Mark>.
@@ -620,7 +629,10 @@ function Contact() {
 function Footer() {
   return (
     <footer className="site-footer">
-      <span>Divin Solutions</span>
+      <span className="footer-brand">
+        <img src={brandLogo.champagne} alt="" />
+        Divin Solutions
+      </span>
       <span>Construction Supply & Site Support</span>
     </footer>
   );
