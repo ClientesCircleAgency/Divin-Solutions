@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/civil-construction",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/civil-construction/",
+      "destination": "/index.html"
+    }
+  ]
+}
