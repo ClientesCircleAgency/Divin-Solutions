@@ -1,11 +1,27 @@
 {
   "rewrites": [
     {
+      "source": "/construction-supply",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/construction-supply/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/civil-construction",
       "destination": "/index.html"
     },
     {
       "source": "/civil-construction/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/accommodations-industrial-support",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/accommodations-industrial-support/",
       "destination": "/index.html"
     }
   ]
