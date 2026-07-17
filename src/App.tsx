@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { CSSProperties, FormEvent, KeyboardEvent, ReactNode } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { KeyboardEvent, ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   AlertTriangle,
@@ -16,10 +16,10 @@ import {
   HardHat,
   Leaf,
   Mail,
+  MessageCircle,
   Menu,
   Phone,
   Route,
-  Send,
   ShieldCheck,
   Truck,
   UsersRound,
@@ -36,7 +36,7 @@ import {
 } from "./data";
 
 const systemVisuals = [asset("scroll-frames/00-blueprint-start.jpg"), ...capabilities.map((item) => item.visual)];
-const brandLogo = asset("logo/edited/divin-logo-cyan-transparent.webp");
+const brandLogo = asset("logo/edited/divin-logo-green-transparent.webp");
 
 const homeHero = {
   desktop: asset("rebrand-light/home/home-hero-desktop.webp"),
@@ -87,35 +87,27 @@ const riskItems = [
   ["05", "Workforce gaps", "Missing profiles leave capacity exposed between phases.", UsersRound],
 ] as const;
 
-const procurementRiskMatrix = [
-  ["Missing materials", "High", "High", 3, 3, "Split vendors and late purchasing create direct work-front stoppages."],
-  ["Equipment downtime", "Medium", "High", 2, 3, "No replacement path means machinery gaps quickly become idle crews."],
-  ["Documentation friction", "High", "Medium", 3, 2, "Approvals, HSE records and certificates can block entry even when resources exist."],
-  ["Logistics bottlenecks", "Medium", "Medium", 2, 2, "Transport, unloading and crane-truck planning affect delivery reliability."],
-  ["Workforce gaps", "Low", "High", 1, 3, "Critical profiles missing at the wrong phase expose schedule continuity."],
-] as const;
-
 const civilProcess = [
   ["01", "Scope Review", "Review drawings, project constraints, BOQ structure and delivery responsibilities."],
   ["02", "Technical Planning", "Define quantities, interfaces, methodology, provisional items and compliance requirements."],
   ["03", "Site Mobilization", "Deploy facilities, access control, machinery, teams, documentation and HSE systems."],
   ["04", "Civil Works", "Execute groundworks, foundations, slabs, drainage and buried utility infrastructure."],
-  ["05", "Systems Coordination", "Align water, fire, electrical, telecom and fuel networks across shared work fronts."],
+  ["05", "Systems Coordination", "Align water, fire, electrical and telecom networks across shared work fronts."],
   ["06", "Testing & Handover", "Complete inspections, CCTV testing, records, close-out documentation and final handover."],
 ];
 
 const civilTimelineSignals = [
   ["01", "Mobilize", "Site setup, access, HSE, equipment and document control"],
   ["02", "Build", "Earthworks, foundations, slabs and equipment bases"],
-  ["03", "Connect", "Drainage, water, fire, telecom, electrical and fuel networks"],
+  ["03", "Connect", "Drainage, water, fire, telecom and electrical networks"],
   ["04", "Validate", "CCTV inspection, watertightness checks, records and handover"],
 ] as const;
 
 const civilAdvantages = [
   ["Single Point of Contact", "An integrated partner for earthworks, foundations, infrastructure packages and technical coordination.", BadgeCheck],
   ["Certified & Compliant", "C40 concrete standards, CE documentation, HSE requirements and project compliance kept visible from planning to handover.", ShieldCheck],
-  ["Proven Track Record", "Experience in large industrial scopes, including Project Terra and high-value earthworks packages.", BarChart3],
-  ["Transparent Pricing", "Detailed BOQ-based budgeting with quantities, unit prices and provisional items identified before execution.", ClipboardCheck],
+  ["Proven Track Record", "Experience in large industrial scopes, including Project Terra and complex infrastructure packages.", BarChart3],
+  ["Transparent Scope Control", "Drawings, quantities, interfaces and provisional items identified before execution starts.", ClipboardCheck],
   ["End-to-End Service", "From initial excavation to watertightness checks, CCTV inspections, records and final technical handover.", Truck],
   ["Material Coordination", "Efficient management of client-supplied and free-issue materials across concrete, reinforcement, pipework and site systems.", Factory],
   ["ESG & Sustainability", "Environmental compliance, waste tracking, e-GAR documentation and more responsible construction practices integrated into delivery.", Leaf],
@@ -127,7 +119,7 @@ const solutionLinks = [
     href: "/construction-supply",
     eyebrow: "Supply continuity",
     copy: "Keep active work fronts supplied with the resources and operational support required before momentum breaks.",
-    scope: ["Materials & machinery", "Logistics, HSE & documents", "Fuel, waste & workforce"],
+    scope: ["Materials & machinery", "Logistics, HSE & documents", "Waste & workforce support"],
     outcome: "Fewer supplier handoffs and lower schedule exposure.",
     icon: Boxes,
   },
@@ -170,7 +162,7 @@ const supplyPortfolioPillars = [
     subtitle: "Plant, Tools & Equipment Hire",
     statement: "Immediate access to a vast certified fleet, managed by Divin Solutions and invoiced in one place.",
     groups: [
-      ["Temporary Power & Climate Control", ["Generators from 15kVA to mega-power", "Site distribution boards", "Lighting towers: diesel, hybrid and solar"]],
+      ["Temporary Power & Climate Control", ["Generators from 15kVA to mega-power", "Site distribution boards", "Hybrid, electric and solar lighting towers"]],
       ["Lifting & Material Handling", ["Elevated work platforms: scissor and articulated", "Telescopic handlers / telehandlers"]],
       ["Heavy & Light Machinery", ["Rotary excavators", "Mini-excavators", "Dumpers", "Compaction rollers"]],
       ["Equipment Support Equipment", ["Air compressors", "Submersible pumps", "Heat generators"]],
@@ -204,11 +196,10 @@ const supplyPortfolioPillars = [
   },
   {
     index: "05",
-    title: "Fuel & Waste Management",
+    title: "Waste & Environmental Management",
     subtitle: "Clean and compliant site flows",
-    statement: "From on-site refuelling to certified waste management.",
+    statement: "Certified waste flows and environmental records handled with clear site compliance.",
     groups: [
-      ["On-Site Refuelling", ["Agricultural/road diesel supply", "Green diesel / HVO", "Direct refuelling into generators and machinery tanks"]],
       ["Waste Containers", ["Skip-container rental", "Timber waste separation", "Plastic waste separation", "Scrap-metal separation"]],
       ["Environmental Certification", ["Certified waste collection", "Regular e-GAR issuance", "Waste tracking manifests"]],
     ],
@@ -253,7 +244,7 @@ const residencePillars = [
     groups: [
       ["Premium Residences", ["High-end real estate", "Privacy", "Security", "Comfort worthy of critical project leadership"]],
       ["Family Integration", ["Homes near international schools", "Urban amenities", "Major commuting routes", "Seamless settlement from day one"]],
-      ["Soft Landing", ["Airport arrival support", "Key handover", "Personalised hands-on support"]],
+      ["Soft Landing", ["Airport arrival support", "Airport-to-home shuttle", "Key handover", "Personalised hands-on support"]],
     ],
   },
   {
@@ -262,8 +253,8 @@ const residencePillars = [
     subtitle: "Move-in-ready homes with zero downtime",
     groups: [
       ["Furniture & Appliances", ["Complete furniture packages", "White goods", "TVs", "HVAC systems", "Delivery and installation before arrival"]],
-      ["Comfort Packs", ["Bedding", "Fresh linens", "Fully equipped kitchenware", "Immediate occupation readiness"]],
-      ["Utility Activation", ["Water", "Electricity", "Gas", "High-speed broadband", "Administrative connections handled before arrival"]],
+      ["Comfort Packs", ["Bedding", "Fresh linens", "Fully equipped kitchenware", "Immediate occupation setup"]],
+      ["Utility Activation", ["Water", "Electricity", "High-speed broadband", "Administrative connections handled before arrival"]],
     ],
   },
   {
@@ -304,55 +295,38 @@ const residenceAdvantages = [
   ["Risk Mitigation & Reputation", "Security deposits, preventative maintenance and dignified living conditions protect operational continuity, talent retention and corporate reputation."],
 ] as const;
 
-const residenceMatrix = [
-  ["Workforce Accommodation", "High volume", "Roster-based", "Shared housing", "Operational continuity"],
-  ["Executive Relocation", "Selective", "Family-ready", "Premium residences", "Leadership stability"],
-  ["Turnkey Setup", "Before arrival", "Move-in-ready", "Furniture + utilities", "Zero downtime"],
-  ["Property Management", "Ongoing", "24/7 support", "Cleaning + maintenance", "Lower HR load"],
-  ["Legal & Contract Administration", "Portfolio-wide", "Lease lifecycle", "Contracts + tax records", "Lower rental-market risk"],
-  ["Logistics Land", "Project-based", "Near site", "Yards + warehouses", "Material proximity"],
+const residenceOutcomeMap = [
+  ["Workforce Accommodation", "Rooms and houses for large teams near the project.", "Teams arrive housed, rested and closer to the site."],
+  ["Executive Relocation", "Premium homes, family-ready locations and arrival support.", "Senior profiles settle faster with less HR involvement."],
+  ["Turnkey Setup", "Furniture, appliances, bedding, utilities and internet before arrival.", "People can move in immediately instead of waiting for setup."],
+  ["Property Management", "Cleaning, maintenance, tenant support, inspections and handovers.", "Daily housing issues stop distracting project managers."],
+  ["Legal & Contract Administration", "Lease negotiation, landlord communication, tax registration and receipts.", "Rental risk and paperwork are controlled by one partner."],
+  ["Industrial Spaces", "Offices, warehouses, laydown yards and secure logistics land.", "Operational space stays close to the work front and project schedule."],
 ] as const;
 
 const projectTerraScope = [
   ["Integrated Management", "Infrastructure, drainage, water and MEP ducting coordinated within one contract."],
   ["Material Logistics", "Successful coordination with TSL for client-supplied / free-issue materials."],
   ["Technical Compliance", "C40 concrete, precast installations and rigorous CCTV testing."],
-  ["Complexity", "Dense multi-utility corridors and hydrocarbon-separation systems."],
+  ["Complexity", "Dense multi-utility corridors and environmental separation systems."],
 ] as const;
 
 const projectTerraCosts = [
-  ["Preliminary Works & Site Setup", "EUR 285,850"],
-  ["Substructures & Foundations", "EUR 334,492"],
-  ["Structural Slabs & Bases", "EUR 82,479"],
-  ["Drainage & Stormwater", "EUR 260,582"],
-  ["Water & Fire Networks", "EUR 114,872"],
-  ["Electrical & Telecom Ducting", "EUR 281,864"],
-  ["Fuel System Infrastructure", "EUR 61,552"],
-  ["Kerbs & External Finishes", "EUR 32,713"],
+  ["Preliminary Works & Site Setup", "Mobilization scope"],
+  ["Substructures & Foundations", "Major civil package"],
+  ["Structural Slabs & Bases", "Technical concrete works"],
+  ["Drainage & Stormwater", "Water-management scope"],
+  ["Water & Fire Networks", "Safety and service networks"],
+  ["Electrical & Telecom Ducting", "Buried utility corridors"],
+  ["Kerbs & External Finishes", "External completion works"],
 ] as const;
 
-const homeCoverageColumns = ["Resources", "Execution", "Compliance", "People", "Space"] as const;
-
-const homeCoverageMatrix = [
-  ["Construction Supply", "Materials, equipment, logistics and support", [3, 1, 3, 2, 1]],
-  ["Civil Construction", "Groundworks, infrastructure and technical handover", [2, 3, 3, 1, 1]],
-  ["Industrial Support", "Accommodation, offices, warehouses and yards", [1, 1, 2, 3, 3]],
-] as const;
-
-const controlLanes = [
-  ["Materials", "Concrete, steel, MEP, consumables", 88],
-  ["Equipment", "Power, machinery, lighting, pumps", 76],
-  ["Logistics", "Transport, offload, documents, HSE", 92],
-  ["Environment", "Fuel, waste, e-GAR, ESG records", 68],
-  ["Workforce", "Operators, trades, cleaning, support", 74],
-] as const;
-
-const boqSegments = [
-  ["Preliminaries", "19.65%", 19.65],
-  ["Substructures", "22.99%", 22.99],
-  ["Drainage", "17.92%", 17.92],
-  ["Ducting", "19.38%", 19.38],
-  ["Other scopes", "20.06%", 20.06],
+const caseStudyFocus = [
+  ["Substructures", "Very high attention", "Foundations and structural bases affect access, sequencing and later technical works.", "Control quantities, reinforcement, concrete sequencing and inspection records before the next trade moves in."],
+  ["Utility corridors", "High attention", "Electrical, telecom, water and fire routes must be coordinated before surfaces are closed.", "Align chambers, ducts, routes and service interfaces with the civil programme."],
+  ["Drainage", "High attention", "Water management can block external works when pipes, chambers and levels are not resolved early.", "Coordinate pipe runs, gradients, inspection points and close-out evidence."],
+  ["Site setup", "High attention", "Mobilization, access, temporary works and working areas define how safely the project can move.", "Prepare the site conditions, access sequence and daily operating controls."],
+  ["External completion", "Medium attention", "Kerbs, paving, crossings and finishes are where technical networks become usable site infrastructure.", "Close edges, finishes, circulation routes and handover details after the buried works are controlled."],
 ] as const;
 
 function Mark({ children }: { children: ReactNode }) {
@@ -397,22 +371,41 @@ function SectionIntro({ eyebrow, title, copy }: { eyebrow: string; title: ReactN
 function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" }) {
   const [open, setOpen] = useState(false);
   const [solutionsOpen, setSolutionsOpen] = useState(false);
+  const [compact, setCompact] = useState(false);
+  const closeTimer = useRef<number | null>(null);
   const activeSolution = page === "supply" ? "Construction Supply" : page === "civil" ? "Civil Construction" : page === "accommodations" ? "Accommodations & Industrial Support" : "";
 
+  useEffect(() => {
+    const update = () => setCompact(window.scrollY > window.innerHeight * 0.7);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
+  const keepSolutionsOpen = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    setSolutionsOpen(true);
+  };
+
+  const scheduleSolutionsClose = () => {
+    if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setSolutionsOpen(false), 140);
+  };
+
   return (
-    <header className="nav-shell">
-      <a href="/" className="brand-mark" aria-label="Divin Solutions home">
+    <header className={compact ? "nav-shell nav-shell-compact" : "nav-shell"}>
+      <a href="/" className="brand-symbol-link" aria-label="Divin Solutions home">
         <span className="brand-symbol"><img src={brandLogo} alt="" decoding="async" /></span>
-        <span>Divin<strong>Solutions</strong></span>
       </a>
+      <a href="/" className="brand-wordmark" aria-label="Divin Solutions home">Divin <strong>Solutions</strong></a>
       <nav className="desktop-nav" aria-label="Primary navigation">
-        <div className="solutions-menu" onMouseLeave={() => setSolutionsOpen(false)}>
-          <button type="button" className={activeSolution ? "solutions-trigger active" : "solutions-trigger"} onClick={() => setSolutionsOpen((value) => !value)} onMouseEnter={() => setSolutionsOpen(true)} aria-expanded={solutionsOpen} aria-controls="solutions-dropdown">
+        <div className="solutions-menu" onMouseEnter={keepSolutionsOpen} onMouseLeave={scheduleSolutionsClose} onFocus={keepSolutionsOpen}>
+          <button type="button" className={activeSolution ? "solutions-trigger active" : "solutions-trigger"} onClick={() => setSolutionsOpen((value) => !value)} aria-expanded={solutionsOpen} aria-controls="solutions-dropdown">
             Solutions <ChevronDown size={16} />
           </button>
           <AnimatePresence>
             {solutionsOpen && (
-              <motion.div id="solutions-dropdown" className="solutions-dropdown" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }}>
+              <motion.div id="solutions-dropdown" className="solutions-dropdown" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} onMouseEnter={keepSolutionsOpen} onMouseLeave={scheduleSolutionsClose}>
                 {solutionLinks.map((solution) => {
                   const Icon = solution.icon;
                   const active = activeSolution === solution.label;
@@ -425,7 +418,6 @@ function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" })
         <a href="/#about">About</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a className="nav-cta" href="#contact">Request Consultation</a>
       <button className="icon-button mobile-menu-button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls="mobile-navigation">
         <Menu size={20} />
       </button>
@@ -437,7 +429,6 @@ function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" })
             {solutionLinks.map((solution) => <a key={solution.href} href={solution.href} className={activeSolution === solution.label ? "service-switch" : ""} onClick={() => setOpen(false)}>{solution.label}</a>)}
             <a href="/#about" onClick={() => setOpen(false)}>About</a>
             <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
-            <a className="mobile-cta" href="#contact" onClick={() => setOpen(false)}>Request Consultation</a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -588,7 +579,7 @@ function HomeHero() {
           <h1>Construction supply that keeps <Mark>sites moving.</Mark></h1>
           <p className="hero-lede">Divin Solutions coordinates materials, machinery, site infrastructure, logistics, documentation and operational support through one partner.</p>
         </motion.div>
-        <div className="hero-status" aria-label="Supply system coverage">
+        <div className="hero-status" aria-label="Supply system areas">
           {['Materials', 'Equipment', 'Logistics', 'Support'].map((item, index) => (
             <div key={item} className="status-row"><span>0{index + 1}</span><strong>{item}</strong></div>
           ))}
@@ -602,7 +593,7 @@ function Problem() {
   return (
     <section id="problem" className="section problem-section">
       <div className="page-grid two-col">
-        <SectionIntro eyebrow="Procurement Risk" title={<>Most delays start before the <Mark>work front.</Mark></>} copy={<>Materials, machinery, documents and support often move through disconnected vendors. When one element fails, the entire schedule absorbs the delay.</>} />
+        <SectionIntro eyebrow="Why Sites Stop" title={<>Small supply gaps become <Mark>site stoppages.</Mark></>} copy={<>A project rarely stops because of one dramatic problem. It stops when materials, machinery, documents or support arrive late, incomplete or through too many disconnected suppliers.</>} />
         <div className="risk-grid">
           {riskItems.map(([index, title, copy, Icon], itemIndex) => (
             <motion.article className="risk-card" key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: itemIndex * 0.05 }}>
@@ -616,45 +607,32 @@ function Problem() {
 }
 
 function ProcurementRiskHeatmap() {
+  const stopPrevention = [
+    ["Missing materials", "Crews wait because concrete, steel, MEP items or consumables are not on site.", "Divin centralizes sourcing and delivery timing before the work front is exposed.", Boxes],
+    ["Equipment downtime", "Machinery gaps leave operators and teams idle while replacements are searched for.", "Divin keeps replacement paths and equipment support available through one contact.", Wrench],
+    ["Logistics bottlenecks", "Transport, unloading or crane-truck planning slows the sequence even when resources exist.", "Divin coordinates transport, access, unloading and handoff around the site schedule.", Route],
+    ["Documentation friction", "Resources arrive but cannot enter because certificates, HSE records or approvals are missing.", "Divin prepares manuals, certificates, HSE files and platform submissions before arrival.", FileCheck2],
+    ["Workforce gaps", "Critical operators, trades or support teams are missing at the wrong phase.", "Divin supports workforce sourcing and operational backup for exposed phases.", UsersRound],
+  ] as const;
+
   return (
     <section className="section risk-heatmap-section">
       <div className="page-grid heatmap-grid">
-        <SectionIntro eyebrow="Risk Heatmap" title={<>Where fragmented procurement creates <Mark>schedule exposure.</Mark></>} copy="The chart translates common site supply problems into likelihood and impact. Divin Solutions reduces risk by centralizing sourcing, logistics, documentation and replacement paths." />
-        <div className="risk-matrix-card" aria-label="Procurement risk priority matrix">
-          <div className="risk-matrix-head">
-            <span>Risk signal</span>
-            <span>Likelihood</span>
-            <span>Impact</span>
-            <span>Priority</span>
+        <SectionIntro eyebrow="Site Continuity" title={<>What usually stops a site, and how Divin <Mark>prevents it.</Mark></>} copy="Each row connects a common site blocker with the practical coordination Divin adds before that blocker becomes a stoppage." />
+        <div className="stop-prevention-card" aria-label="Site stoppage prevention table">
+          <div className="stop-prevention-head">
+            <span>Site blocker</span>
+            <span>What happens on site</span>
+            <span>How Divin prevents it</span>
           </div>
-          <div className="risk-matrix-rows">
-            {procurementRiskMatrix.map(([title, likelihood, impact, , , copy], index) => {
-              const likelihoodScore = likelihood === "High" ? 3 : likelihood === "Medium" ? 2 : 1;
-              const impactScore = impact === "High" ? 3 : impact === "Medium" ? 2 : 1;
-              const priority = likelihoodScore * impactScore;
-              const priorityLabel = priority >= 9 ? "Critical" : priority >= 6 ? "High" : "Watch";
+          <div className="stop-prevention-rows">
+            {stopPrevention.map(([title, problem, response, Icon], index) => {
+              const BlockerIcon = Icon;
               return (
-                <motion.article
-                  className={`risk-matrix-row priority-${priorityLabel.toLowerCase()}`}
-                  key={title}
-                  initial={{ opacity: 0, y: 14 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.45 }}
-                  transition={{ delay: index * 0.06, duration: 0.28 }}
-                >
-                  <div className="risk-signal">
-                    <span>0{index + 1}</span>
-                    <div><strong>{title}</strong><p>{copy}</p></div>
-                  </div>
-                  <div className="risk-score" aria-label={`${likelihood} likelihood`}>
-                    <small>{likelihood}</small>
-                    <i style={{ "--score-width": `${(likelihoodScore / 3) * 100}%` } as CSSProperties} />
-                  </div>
-                  <div className="risk-score" aria-label={`${impact} impact`}>
-                    <small>{impact}</small>
-                    <i style={{ "--score-width": `${(impactScore / 3) * 100}%` } as CSSProperties} />
-                  </div>
-                  <div className="risk-priority"><strong>{priorityLabel}</strong><span>{priority}/9</span></div>
+                <motion.article className="stop-prevention-row" key={title} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.06, duration: 0.28 }}>
+                  <div className="stop-blocker"><span>0{index + 1}</span><BlockerIcon size={26} /><strong>{title}</strong></div>
+                  <p>{problem}</p>
+                  <p>{response}</p>
                 </motion.article>
               );
             })}
@@ -669,11 +647,22 @@ function Capabilities() {
   const [selected, setSelected] = useState(capabilities[0]);
   const [openSpec, setOpenSpec] = useState(selected.specs[0]?.title ?? "");
   useEffect(() => setOpenSpec(selected.specs[0]?.title ?? ""), [selected]);
+  const capabilitySummary = [
+    ["Choose an area", "Materials, equipment, logistics, waste, technical support or workforce capacity.", Boxes],
+    ["Open the specs", "Each area breaks down into practical product and service groups.", ClipboardCheck],
+    ["Request one flow", "Divin coordinates suppliers, documents, delivery timing and site handoff.", Truck],
+  ] as const;
 
   return (
     <section id="solutions" className="section capabilities-section">
       <div className="page-grid">
-        <SectionIntro eyebrow="Supply Capabilities" title={<>Specific resources for <Mark>active construction sites.</Mark></>} copy={<>Eight coordinated supply areas, each broken down into practical product, equipment and support categories.</>} />
+        <SectionIntro eyebrow="Supply Capabilities" title={<>Specific resources for <Mark>active construction sites.</Mark></>} copy={<>Select a supply area to see exactly what Divin can coordinate, what site problem it removes and which product or service groups sit inside it.</>} />
+        <div className="capability-summary-strip" aria-label="How to read supply capabilities">
+          {capabilitySummary.map(([title, copy, Icon], index) => {
+            const SummaryIcon = Icon;
+            return <article key={title}><span>0{index + 1}</span><SummaryIcon size={24} /><strong>{title}</strong><p>{copy}</p></article>;
+          })}
+        </div>
         <div className="capability-workbench">
           <div className="capability-tabs" role="tablist" aria-label="Supply capabilities">
             {capabilities.map((capability, capabilityIndex) => {
@@ -686,7 +675,7 @@ function Capabilities() {
               <div className="capability-image"><img src={selected.detailVisual} alt={`${selected.title} supply capability`} loading="lazy" decoding="async" /></div>
               <div className="capability-copy">
                 <p className="eyebrow">{selected.eyebrow}</p><h3>{selected.title}</h3><p>{selected.copy}</p>
-                <div className="pain-outcome"><div><span>Problem</span><p>{selected.pain}</p></div><div><span>Outcome</span><p>{selected.outcome}</p></div></div>
+                <div className="pain-outcome"><div><span>Site issue</span><p>{selected.pain}</p></div><div><span>Divin result</span><p>{selected.outcome}</p></div></div>
                 <div className="spec-accordion">
                   {selected.specs.map((group) => {
                     const isOpen = openSpec === group.title;
@@ -703,10 +692,22 @@ function Capabilities() {
 }
 
 function FullSupplyPortfolio() {
+  const portfolioUseCases = [
+    ["When the site needs resources", "Materials, equipment, welfare infrastructure, waste flows or technical profiles can be requested through one coordination layer.", Boxes],
+    ["When access depends on paperwork", "Documentation, HSE files, certificates, lift plans and platform submissions are prepared before delivery pressure builds.", FileCheck2],
+    ["When scope changes mid-project", "Replacement paths, technical support and alternative suppliers keep the supply chain responsive instead of reactive.", Route],
+  ] as const;
+
   return (
     <section id="full-supply-portfolio" className="section full-portfolio-section">
       <div className="page-grid">
-        <SectionIntro eyebrow="Complete Supply Portfolio" title={<>Every resource category behind the <Mark>supply chain.</Mark></>} copy="The portfolio is structured for procurement teams that need the exact scope visible, not hidden behind broad service labels." />
+        <SectionIntro eyebrow="Complete Supply Portfolio" title={<>The detailed operating catalogue behind the <Mark>supply service.</Mark></>} copy="This section keeps the full detail visible while making the purpose clear: Divin coordinates the resources, approvals and backup paths that keep active work fronts moving." />
+        <div className="portfolio-decision-strip" aria-label="How Divin supply portfolio supports construction sites">
+          {portfolioUseCases.map(([title, copy, Icon], index) => {
+            const UseIcon = Icon;
+            return <article key={title}><span>0{index + 1}</span><UseIcon size={24} /><strong>{title}</strong><p>{copy}</p></article>;
+          })}
+        </div>
         <div className="portfolio-pillar-grid">
           {supplyPortfolioPillars.map((pillar) => (
             <article className="portfolio-pillar" key={pillar.index}>
@@ -716,7 +717,7 @@ function FullSupplyPortfolio() {
                   <p className="eyebrow">{pillar.subtitle}</p>
                   <h3>{pillar.title}</h3>
                   <p>{pillar.statement}</p>
-                  <small>{pillar.groups.length} scope groups / {pillar.groups.reduce((total, [, items]) => total + items.length, 0)} listed resources</small>
+                  <small>What this solves on site</small>
                 </div>
               </div>
               <div className="portfolio-group-grid">
@@ -736,45 +737,61 @@ function FullSupplyPortfolio() {
 }
 
 function OperatingLayerVisual() {
+  const operatingRoutes = [
+    {
+      title: "Construction Supply",
+      pressure: "Materials, equipment and site support arrive from too many disconnected suppliers.",
+      coordination: "Divin centralizes sourcing, documentation, delivery and replacement paths.",
+      result: "Work fronts stay supplied before teams lose momentum.",
+      Icon: Boxes,
+    },
+    {
+      title: "Civil Construction",
+      pressure: "Groundworks, foundations and utility networks can block one another when scopes are split.",
+      coordination: "Divin aligns drawings, quantities, site preparation, civil works and technical handover.",
+      result: "Physical infrastructure moves under one accountable execution plan.",
+      Icon: HardHat,
+    },
+    {
+      title: "Industrial Support",
+      pressure: "Teams need housing, offices, warehouses and yards before project operations can stabilize.",
+      coordination: "Divin secures, activates and manages the spaces that keep people and logistics close to site.",
+      result: "The project gains operational capacity without overloading internal teams.",
+      Icon: Factory,
+    },
+  ] as const;
+
+  const operatingControls = [
+    ["Resources", "Materials, machinery and consumables"],
+    ["Execution", "Civil works and technical scopes"],
+    ["Compliance", "Documents, HSE records and approvals"],
+    ["People", "Accommodation, workforce support and daily stability"],
+    ["Space", "Offices, warehouses, yards and logistics land"],
+  ] as const;
+
   return (
     <section className="section signature-section">
       <div className="page-grid signature-grid">
         <div>
-          <p className="eyebrow">Operational Coverage Matrix</p>
-          <h2>One company covering the pressure points behind <Mark>site continuity.</Mark></h2>
-          <p>The Home page should explain coverage, not process. This matrix shows how each Divin Solutions business unit maps against the operational needs that normally fragment large construction projects.</p>
+          <p className="eyebrow">Executive Coordination</p>
+          <h2>Three business units. One <Mark>accountable project view.</Mark></h2>
+          <p>Divin Solutions reduces the operational noise around large projects by connecting supply, civil works and industrial support under one partner. Each unit solves a specific project pressure and keeps responsibility clear for decision-makers.</p>
         </div>
-        <div className="coverage-matrix-card" aria-label="Operational coverage matrix by business unit">
-          <div className="coverage-summary">
-            <span><strong>3</strong> business units</span>
-            <span><strong>5</strong> pressure points</span>
-            <span><strong>1</strong> control layer</span>
-          </div>
-          <div className="coverage-matrix-head">
-            <span>Business Unit</span>
-            {homeCoverageColumns.map((column) => <span key={column}>{column}</span>)}
-          </div>
-          <div className="coverage-matrix-body">
-            {homeCoverageMatrix.map(([title, description, values], rowIndex) => (
-              <motion.div className="coverage-row" key={title} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }} transition={{ delay: rowIndex * 0.08, duration: 0.28 }}>
-                <div className="coverage-label">
-                  <strong>{title}</strong>
-                  <span>{description}</span>
-                  <em>{values.reduce((sum, value) => sum + value, 0)}/15 coverage weight</em>
-                </div>
-                {values.map((value, index) => (
-                  <div className={`coverage-cell coverage-level-${value}`} key={`${title}-${homeCoverageColumns[index]}`}>
-                    <span>{value === 3 ? "Core" : value === 2 ? "Support" : "Adjacent"}</span>
-                    <i><b style={{ "--coverage": `${(value / 3) * 100}%` } as CSSProperties} /></i>
-                  </div>
-                ))}
-              </motion.div>
+        <div className="operating-flow-map" aria-label="Divin Solutions executive coordination infographic">
+          <div className="operating-flow-head"><span>Project pressure</span><span>Divin coordinates</span><span>Operational result</span></div>
+          <div className="operating-route-grid">
+            {operatingRoutes.map(({ title, pressure, coordination, result, Icon }, index) => (
+              <motion.article key={title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.08, duration: 0.3 }}>
+                <div className="operating-route-title"><span>0{index + 1}</span><Icon size={30} /><h3>{title}</h3></div>
+                <p>{pressure}</p>
+                <p>{coordination}</p>
+                <strong>{result}</strong>
+              </motion.article>
             ))}
           </div>
-          <div className="coverage-legend">
-            <span><i className="coverage-level-3" /> Core coverage</span>
-            <span><i className="coverage-level-2" /> Support coverage</span>
-            <span><i className="coverage-level-1" /> Adjacent coverage</span>
+          <div className="operating-control-strip" aria-label="Areas coordinated by Divin Solutions">
+            <div><span>Divin coordinates</span><strong>Resources, execution, compliance, people and space.</strong></div>
+            {operatingControls.map(([title, copy]) => <article key={title}><strong>{title}</strong><p>{copy}</p></article>)}
           </div>
         </div>
       </div>
@@ -783,29 +800,44 @@ function OperatingLayerVisual() {
 }
 
 function SupplyControlRoom() {
-  const readinessAverage = Math.round(controlLanes.reduce((sum, [, , value]) => sum + value, 0) / controlLanes.length);
+  const supplyFlow = [
+    ["01", "Need", "The site identifies what is missing before the work front stops.", AlertTriangle],
+    ["02", "Source", "Divin finds the material, equipment, service or support profile through one channel.", Boxes],
+    ["03", "Clear", "Documents, certificates, HSE records and access requirements are prepared before arrival.", ClipboardCheck],
+    ["04", "Deliver", "Transport, unloading and handover are coordinated around the project schedule.", Truck],
+    ["05", "Continue", "Replacement paths and support keep the site moving when requirements change.", Route],
+  ] as const;
+
+  const siteChanges = [
+    ["Fewer calls", "One partner filters supplier noise before it reaches the project team."],
+    ["Fewer blockers", "Paperwork and entry requirements are handled before resources arrive."],
+    ["Fewer stoppages", "Materials, equipment and support move around the work front, not after it fails."],
+  ] as const;
+
   return (
     <section className="section control-room-section">
       <div className="page-grid control-room-grid">
-        <SectionIntro eyebrow="Supply Intelligence" title={<>A live-feeling view of <Mark>resource pressure.</Mark></>} copy="Inspired by the operational diagrams in the client material, this section turns supply into an executive dashboard: categories, bottlenecks and readiness signals in one visual frame." />
-        <div className="control-room-panel" aria-label="Supply readiness dashboard">
+        <SectionIntro eyebrow="Request Flow" title={<>How Divin turns requests into <Mark>site-ready resources.</Mark></>} copy="The value is operational clarity: identify the need, source the right resource, clear the paperwork, deliver it to site and keep a replacement path ready." />
+        <div className="supply-flow-panel" aria-label="Construction supply operating flow">
           <div className="control-panel-head">
             <span>Divin Supply OS</span>
-            <strong>Readiness Index</strong>
+            <strong>Request to site-ready</strong>
           </div>
-          <div className="control-dashboard">
-            <div className="readiness-dial" style={{ "--dial": `${readinessAverage}%` } as CSSProperties}>
-              <div><strong>{readinessAverage}%</strong><span>Aggregate readiness</span></div>
-            </div>
-            <div className="control-lanes">
-              {controlLanes.map(([title, detail, value], index) => (
-                <motion.div className="control-lane" key={title} initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.45 }} transition={{ delay: index * 0.08 }}>
-                  <div><strong>{title}</strong><span>{detail}</span></div>
-                  <div className="lane-track"><motion.span initial={{ width: 0 }} whileInView={{ width: `${value}%` }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.12 + index * 0.08 }} /></div>
-                  <em>{value}%</em>
-                </motion.div>
-              ))}
-            </div>
+          <div className="supply-flow-rail">
+            {supplyFlow.map(([index, title, copy, Icon], itemIndex) => {
+              const StepIcon = Icon;
+              return (
+                <motion.article className="supply-flow-step" key={title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.4 }} transition={{ delay: itemIndex * 0.06, duration: 0.28 }}>
+                  <span>{index}</span>
+                  <StepIcon size={24} />
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
+                </motion.article>
+              );
+            })}
+          </div>
+          <div className="site-change-grid">
+            {siteChanges.map(([title, copy], index) => <motion.article key={title} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.24 + index * 0.06 }}><strong>{title}</strong><p>{copy}</p></motion.article>)}
           </div>
           <div className="control-metrics">
             {["One contact", "One invoice", "One accountable flow"].map((item) => <span key={item}>{item}</span>)}
@@ -857,46 +889,31 @@ function Advantage() {
 }
 
 function Contact({ mode = "supply" }: { mode?: "supply" | "civil" | "accommodations" | "general" }) {
-  const [sent, setSent] = useState(false);
-  const services = useMemo(() => {
-    if (mode === "civil") return constructionServices.map((item) => item.title);
-    if (mode === "accommodations") return residencePillars.map((item) => item.title);
-    if (mode === "general") return solutionLinks.map((solution) => solution.label);
-    return capabilities.map((item) => item.title);
-  }, [mode]);
-  const submit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); setSent(true); };
   const contactCopy = {
     supply: {
       eyebrow: "Supply Consultation",
       title: <>Tell us what your project <Mark>needs next.</Mark></>,
       copy: "Share the resources, timing and site constraints you need to solve. We will help define the right supply path.",
-      label: "Required supply area",
-      placeholder: "Tell us about materials, equipment, timing and site constraints.",
     },
     civil: {
       eyebrow: "Civil Construction Consultation",
       title: <>Define the right <Mark>civil works package.</Mark></>,
       copy: "Share the project location, work packages, timing and available BOQ or drawings. We will review the scope and define the next technical step.",
-      label: "Required work package",
-      placeholder: "Tell us about scope, timeline, BOQ availability and project constraints.",
     },
     accommodations: {
       eyebrow: "Accommodation & Operational Space Consultation",
       title: <>Mobilize the right homes and spaces for <Mark>your project.</Mark></>,
       copy: "Share your workforce, relocation, property-management or industrial-space requirements. We will define the sourcing, setup and operating path.",
-      label: "Required accommodation or space service",
-      placeholder: "Tell us about staff numbers, arrival dates, location, accommodation standards, utilities, offices, warehouses or yard requirements.",
     },
     general: {
       eyebrow: "Divin Solutions Consultation",
       title: <>Map the right solution for <Mark>your operation.</Mark></>,
       copy: "Share the project challenge, timing and operational priorities. We will route the request to the right Divin Solutions team.",
-      label: "Solution area",
-      placeholder: "Tell us about the project, location, timing and what needs to be coordinated.",
     },
   }[mode];
+  const whatsappHref = "https://wa.me/351928261397";
   return (
-    <section id="contact" className="section contact-section"><div className="page-grid contact-grid"><div><div className="contact-brand"><img src={brandLogo} alt="" loading="lazy" decoding="async" /></div><p className="eyebrow">{contactCopy.eyebrow}</p><h2>{contactCopy.title}</h2><p>{contactCopy.copy}</p><div className="contact-methods"><span><Mail size={18} />commercial@divinesolutions.pt</span><span><Phone size={18} />WhatsApp / phone to confirm</span></div></div><form className="contact-form" onSubmit={submit}><label>Name<input name="name" autoComplete="name" required /></label><label>Company<input name="company" autoComplete="organization" required /></label><label>Email<input name="email" type="email" autoComplete="email" required /></label><label>{contactCopy.label}<select name="service" defaultValue="" required><option value="" disabled>Select an option</option>{services.map((service) => <option key={service}>{service}</option>)}</select></label>{mode !== "supply" && <label className="full-field">Project location<input name="location" autoComplete="address-level2" /></label>}<label className="full-field">Message<textarea name="message" placeholder={contactCopy.placeholder} /></label><button className="button primary full-field" type="submit" aria-live="polite">{sent ? "Request noted" : "Request Consultation"}<Send size={18} /></button></form></div></section>
+    <section id="contact" className="section contact-section"><div className="page-grid contact-grid contact-grid-simple"><div><div className="contact-brand"><img src={brandLogo} alt="" loading="lazy" decoding="async" /></div><p className="eyebrow">{contactCopy.eyebrow}</p><h2>{contactCopy.title}</h2><p>{contactCopy.copy}</p><div className="contact-methods"><span><Mail size={18} />commercial@divinsolutions.pt</span><span><Phone size={18} />+351 928 261 397</span></div></div><article className="whatsapp-direct"><span><MessageCircle size={20} />Direct WhatsApp</span><h3>Prefer a direct message?</h3><p>Open a WhatsApp conversation with Divin Solutions and send your project request directly.</p><a className="button whatsapp-button" href={whatsappHref} target="_blank" rel="noreferrer">Start WhatsApp chat<MessageCircle size={18} /></a></article></div></section>
   );
 }
 
@@ -1006,7 +1023,7 @@ function CivilHero() {
             <h1>Groundworks and infrastructure built around <Mark>project continuity.</Mark></h1>
             <p className="hero-lede">Divin Solutions delivers coordinated civil works for industrial and logistics projects, from site mobilization and foundations to drainage, utility networks and technical handover.</p>
           </motion.div>
-          <div className="hero-metrics"><span><small>Reference scope</small>EUR 1.45M+</span><span><small>BOQ lines</small>297+</span><span><small>Work areas</small>9</span></div>
+          <div className="hero-metrics"><span><small>Reference scope</small>Large-scale civil works</span><span><small>Technical records</small>Detailed scope</span><span><small>Work areas</small>9</span></div>
         </div>
         <div className="hero-stage-control" aria-label="Civil construction transformation stages">
           <button type="button" className={activeStep === 0 ? "ghost-stage-button" : ""} onClick={() => animateToStepRef.current(activeStep - 1)} disabled={activeStep === 0} aria-label="Previous construction stage"><ChevronUp size={18} /></button>
@@ -1023,12 +1040,23 @@ function CivilHero() {
 }
 
 function CivilOverview() {
-  const layers = [['01','Site Preparation','Mobilization, temporary facilities, access and safe site operations.',HardHat],['02','Structural Works','Excavation, foundations, concrete slabs and equipment bases.',Wrench],['03','Utility Infrastructure','Drainage, water, fire, telecom and electrical networks.',Route],['04','Testing & Records','Inspection, CCTV testing, documentation and handover control.',FileCheck2]] as const;
-  return <section id="overview" className="section civil-overview"><div className="page-grid"><SectionIntro eyebrow="Integrated Civil Infrastructure" title={<>One delivery layer from <Mark>groundworks to handover.</Mark></>} copy="The service connects construction execution, materials, HSE, documentation and technical coordination instead of treating each package as an isolated contract." /><div className="civil-infra-map radial" aria-label="Civil infrastructure delivery layers">{layers.map(([index, title, copy, Icon], itemIndex) => { const Component = Icon as typeof HardHat; return <motion.article key={title} initial={{ opacity: 0, scale: 0.96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.4 }} transition={{ delay: itemIndex * 0.07, duration: 0.28 }}><span>{index}</span><Component size={28} strokeWidth={1.5} /><div><h3>{title}</h3><p>{copy}</p></div></motion.article>; })}<div className="civil-infra-core"><strong>Divin Solutions</strong><span>Single coordination layer</span></div></div></div></section>;
+  const layers = [
+    ["01", "Site Preparation", "Mobilization, temporary facilities, access and safe site operations.", "The project starts with controlled access, welfare and working conditions.", HardHat],
+    ["02", "Structural Works", "Excavation, foundations, concrete slabs and equipment bases.", "Core construction packages move with clear quantities and site interfaces.", Wrench],
+    ["03", "Utility Infrastructure", "Drainage, water, fire, telecom and electrical networks.", "Buried networks are coordinated before they create rework between teams.", Route],
+    ["04", "Testing & Records", "Inspection, CCTV testing, documentation and handover control.", "The project closes with proof, records and technical handover ready.", FileCheck2],
+  ] as const;
+
+  return <section id="overview" className="section civil-overview"><div className="page-grid"><SectionIntro eyebrow="Integrated Civil Infrastructure" title={<>One delivery layer from <Mark>groundworks to handover.</Mark></>} copy="The service connects construction execution, materials, HSE, documentation and technical coordination instead of treating each package as an isolated contract." /><div className="civil-delivery-map" aria-label="Civil infrastructure delivery responsibilities"><div className="civil-delivery-head"><span>Work area</span><span>What Divin executes</span><span>Site outcome</span></div>{layers.map(([index, title, scope, result, Icon], itemIndex) => { const Component = Icon as typeof HardHat; return <motion.article key={title} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ delay: itemIndex * 0.07, duration: 0.28 }}><div className="civil-delivery-title"><span>{index}</span><Component size={28} strokeWidth={1.5} /><h3>{title}</h3></div><p>{scope}</p><strong>{result}</strong></motion.article>; })}<div className="civil-delivery-core"><span>Divin Solutions coordinates</span><strong>Execution, materials, HSE, documentation and handover.</strong></div></div></div></section>;
 }
 
 function CivilServices() {
   const [selected, setSelected] = useState(constructionServices[0]);
+  const serviceGuidance = [
+    ["Choose a package", "Each work package represents a civil construction responsibility, not a price list.", HardHat],
+    ["Review the scope", "The detail panel shows what the package normally includes on an industrial site.", ClipboardCheck],
+    ["Control the interface", "Divin coordinates execution, materials, HSE records and handover around the same plan.", Route],
+  ] as const;
   useEffect(() => {
     const tablist = document.querySelector<HTMLElement>(".civil-service-tabs");
     const tabs = Array.from(tablist?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? []);
@@ -1051,19 +1079,19 @@ function CivilServices() {
     tablist?.addEventListener("keydown", handleKeyDown);
     return () => tablist?.removeEventListener("keydown", handleKeyDown);
   }, [selected]);
-  return <section id="services" className="section civil-services"><div className="page-grid"><SectionIntro eyebrow="Work Packages" title={<>Eight packages covering the project’s <Mark>civil infrastructure.</Mark></>} copy="Select a package to review its typical scope, technical quantities and execution focus." /><div className="civil-service-layout"><div className="civil-service-tabs" role="tablist" aria-label="Civil construction work packages">{constructionServices.map((service) => { const Icon = service.icon; return <button key={service.index} type="button" role="tab" aria-selected={selected.index === service.index} aria-controls={`civil-panel-${service.index}`} className={selected.index === service.index ? 'civil-service-tab active' : 'civil-service-tab'} onClick={() => setSelected(service)}><span>{service.index}</span><Icon size={20} /><strong>{service.title}</strong></button>; })}</div><AnimatePresence mode="wait"><motion.article id={`civil-panel-${selected.index}`} className="civil-service-detail" key={selected.index} role="tabpanel" initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -18 }}><div className="civil-service-image"><img src={selected.visual} alt={selected.title} loading="lazy" decoding="async" /></div><div className="civil-service-copy"><p className="eyebrow">{selected.subtitle}</p><h3>{selected.title}</h3><p>{selected.summary}</p><div className="civil-package-metrics"><span><small>Reference package</small>{selected.value}</span><span><small>Project allocation</small>{selected.share}</span></div><div className="civil-detail-columns"><div><h4>Typical scope</h4><ul>{selected.scope.map((item) => <li key={item}>{item}</li>)}</ul></div><div><h4>Execution focus</h4><ul>{selected.metrics.map((item) => <li key={item}>{item}</li>)}</ul></div></div></div></motion.article></AnimatePresence></div></div></section>;
+  return <section id="services" className="section civil-services"><div className="page-grid"><SectionIntro eyebrow="Work Packages" title={<>Civil packages explained as <Mark>site responsibilities.</Mark></>} copy="This section is not a pricing table. It shows the construction areas Divin can execute and coordinate, from preparation to handover." /><div className="civil-guidance-strip" aria-label="How to read civil work packages">{serviceGuidance.map(([title, copy, Icon], index) => { const GuidanceIcon = Icon; return <article key={title}><span>0{index + 1}</span><GuidanceIcon size={24} /><strong>{title}</strong><p>{copy}</p></article>; })}</div><div className="civil-service-layout"><div className="civil-service-tabs" role="tablist" aria-label="Civil construction work packages">{constructionServices.map((service) => { const Icon = service.icon; return <button key={service.index} type="button" role="tab" aria-selected={selected.index === service.index} aria-controls={`civil-panel-${service.index}`} className={selected.index === service.index ? 'civil-service-tab active' : 'civil-service-tab'} onClick={() => setSelected(service)}><span>{service.index}</span><Icon size={20} /><strong>{service.title}</strong></button>; })}</div><AnimatePresence mode="wait"><motion.article id={`civil-panel-${selected.index}`} className="civil-service-detail" key={selected.index} role="tabpanel" initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -18 }}><div className="civil-service-image"><img src={selected.visual} alt={selected.title} loading="lazy" decoding="async" /></div><div className="civil-service-copy"><p className="eyebrow">{selected.subtitle}</p><h3>{selected.title}</h3><p>{selected.summary}</p><div className="civil-package-metrics"><span><small>Package role</small>{selected.value}</span><span><small>Coordination focus</small>Scope, interfaces and handover</span></div><div className="civil-detail-columns"><div><h4>Typical scope</h4><ul>{selected.scope.map((item) => <li key={item}>{item}</li>)}</ul></div><div><h4>Execution focus</h4><ul>{selected.metrics.map((item) => <li key={item}>{item}</li>)}</ul></div></div></div></motion.article></AnimatePresence></div></div></section>;
 }
 
 function CivilProcess() {
-  return <section id="civil-process" className="section civil-process"><div className="page-grid"><SectionIntro eyebrow="Delivery Process" title={<>A controlled route from <Mark>scope to handover.</Mark></>} copy="The process keeps commercial definition, technical planning, execution and project records connected." /><div className="civil-timeline-chart" aria-label="Civil delivery timeline">{civilTimelineSignals.map(([index, title, copy], itemIndex) => <motion.article key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }} transition={{ delay: itemIndex * 0.08, duration: 0.3 }}><span>{index}</span><h3>{title}</h3><p>{copy}</p></motion.article>)}</div><div className="civil-process-grid">{civilProcess.map(([index, title, copy]) => <article key={index}><span>{index}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>;
+  return <section id="civil-process" className="section civil-process"><div className="page-grid"><SectionIntro eyebrow="Delivery Process" title={<>A controlled route from <Mark>scope to handover.</Mark></>} copy="The process keeps the work understandable: define what will be built, prepare the site, execute the civil packages, connect the networks and close the records." /><div className="civil-delivery-path" aria-label="Civil delivery path">{civilTimelineSignals.map(([index, title, copy], itemIndex) => <motion.article key={title} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }} transition={{ delay: itemIndex * 0.08, duration: 0.3 }}><span>{index}</span><h3>{title}</h3><p>{copy}</p></motion.article>)}</div><div className="civil-control-points" aria-label="Civil construction control points">{civilProcess.map(([index, title, copy]) => <article key={index}><span>{index}</span><div><h3>{title}</h3><p>{copy}</p></div></article>)}</div></div></section>;
 }
 
 function TechnicalCoordination() {
-  return <section className="section technical-section"><div className="page-grid technical-grid"><div className="technical-image"><img src={civilAssets.boq} alt="Civil engineering BOQ and technical planning" loading="lazy" decoding="async" /></div><div><p className="eyebrow">Technical Coordination Layer</p><h2>More than execution: <Mark>scope control.</Mark></h2><p>Complex civil works depend on accurate quantities, clear interfaces and disciplined documentation. Divin Solutions coordinates the commercial and technical layer around execution.</p><ul className="check-list">{['BOQ review and package mapping','Material and free-issue coordination','Civil and MEP interface planning','HSE and compliance documentation','Inspection, testing and close-out records'].map((item) => <li key={item}><BadgeCheck size={18} />{item}</li>)}</ul></div></div></section>;
+  return <section className="section technical-section"><div className="page-grid technical-grid"><div className="technical-image"><img src={civilAssets.boq} alt="Civil engineering drawings and technical planning" loading="lazy" decoding="async" /></div><div><p className="eyebrow">Technical Coordination Layer</p><h2>More than execution: <Mark>scope control.</Mark></h2><p>Complex civil works depend on clear quantities, interfaces, drawings, site conditions and records. Divin Solutions coordinates the technical layer around execution so each package is ready before it reaches site.</p><ul className="check-list">{['Drawing and scope review','Material and free-issue coordination','Civil and MEP interface planning','HSE and compliance documentation','Inspection, testing and close-out records'].map((item) => <li key={item}><BadgeCheck size={18} />{item}</li>)}</ul></div></div></section>;
 }
 
 function CaseStudy() {
-  return <section id="case-study" className="section case-study-section"><div className="page-grid"><div className="case-study-head"><div><p className="eyebrow">Project Reference</p><h2>Project Terra: infrastructure across <Mark>nine work areas.</Mark></h2></div><p>A large-scale industrial infrastructure reference showing integrated delivery across groundworks, drainage, water, structural concrete, utility corridors and technical systems.</p></div><div className="case-study-visual"><img src={civilAssets.caseStudy} alt="Large-scale industrial civil infrastructure project" loading="lazy" decoding="async" /><div className="case-study-stats"><span><small>Indicative project value</small>EUR 1,454,403.38</span><span><small>BOQ structure</small>297+ lines</span><span><small>Work packages</small>9 areas</span></div></div><div className="boq-dashboard"><div><p className="eyebrow">BOQ Distribution</p><h3>Cost concentration by civil workstream</h3><p>Substructures, drainage and ducting carry the largest technical and financial weight, which is why coordination and quantity control become executive-level risk management.</p></div><div className="boq-chart-suite"><div className="boq-donut" aria-label="BOQ composition donut chart"><div className="boq-donut-center"><strong>100%</strong><span>Total BOQ</span></div></div><div className="boq-bars">{boqSegments.map(([title, value, width], index) => <motion.article key={title} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }}><div><strong>{title}</strong><span>{value}</span></div><div className="boq-track"><motion.span initial={{ width: 0 }} whileInView={{ width: `${width * 3.4}%` }} viewport={{ once: true }} transition={{ duration: 0.75, delay: 0.1 + index * 0.08 }} /></div></motion.article>)}</div></div></div><div className="terra-detail-grid"><div><h3>Scope delivered</h3>{projectTerraScope.map(([title, copy]) => <article key={title}><BadgeCheck size={18} /><div><strong>{title}</strong><p>{copy}</p></div></article>)}</div><div><h3>Package values</h3>{projectTerraCosts.map(([title, value]) => <article key={title}><span>{title}</span><strong>{value}</strong></article>)}</div></div><div className="case-study-note"><strong>Reference context</strong><p>Based on an indicative civil infrastructure BOQ issued in April 2026. Substructures and drainage/water networks represent almost 50% of the total infrastructure investment. Executive cost centres: drainage and water EUR 375,454; substructures EUR 334,492; ducting and services EUR 281,864; other packages including preliminaries EUR 462,593.</p></div></div></section>;
+  return <section id="case-study" className="section case-study-section"><div className="page-grid"><div className="case-study-head"><div><p className="eyebrow">Project Reference</p><h2>Project Terra: infrastructure across <Mark>nine work areas.</Mark></h2></div><p>A large-scale industrial infrastructure reference showing integrated delivery across groundworks, drainage, water, structural concrete, utility corridors and technical systems.</p></div><div className="case-study-visual"><img src={civilAssets.caseStudy} alt="Large-scale industrial civil infrastructure project" loading="lazy" decoding="async" /><div className="case-study-stats"><span><small>Reference scale</small>Large infrastructure scope</span><span><small>Technical records</small>Detailed work schedule</span><span><small>Work packages</small>9 areas</span></div></div><div className="boq-dashboard"><div><p className="eyebrow">Coordination Focus Map</p><h3>Where does coordination matter most?</h3><p>This map translates the reference scope into operational attention: which areas create the most interfaces, blockers and handover risk.</p></div><div className="coordination-focus-map" aria-label="Civil coordination focus by work area"><div className="coordination-focus-head"><span>Work area</span><span>Coordination focus</span><span>Why it matters</span><span>Divin action</span></div>{caseStudyFocus.map(([title, level, reason, action], index) => <motion.article key={title} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.06, duration: 0.28 }}><div className="focus-area"><span>{String(index + 1).padStart(2, "0")}</span><strong>{title}</strong></div><span className="focus-level">{level}</span><p>{reason}</p><p>{action}</p></motion.article>)}</div></div><div className="terra-detail-grid"><div><h3>Scope delivered</h3>{projectTerraScope.map(([title, copy]) => <article key={title}><BadgeCheck size={18} /><div><strong>{title}</strong><p>{copy}</p></div></article>)}</div><div><h3>Work packages</h3>{projectTerraCosts.map(([title, value]) => <article key={title}><span>{title}</span><strong>{value}</strong></article>)}</div></div><div className="case-study-note"><strong>Reference context</strong><p>Based on an indicative civil infrastructure work schedule issued in April 2026. The reference highlights the operational importance of substructures, drainage, water networks, ducting, service corridors and external works without disclosing commercial values.</p></div></div></section>;
 }
 
 function CivilAdvantages() {
@@ -1152,13 +1180,13 @@ function AccommodationsServices() {
   return (
     <section id="services" className="section accommodations-services">
       <div className="page-grid">
-        <SectionIntro eyebrow="Divin Residence Portfolio" title={<>Spaces, housing and operations for <Mark>workforce continuity.</Mark></>} copy="This is not consumer real estate. It is corporate accommodation, relocation, property operation and industrial space support for large engineering and construction projects." />
-        <div className="residence-operating-model" aria-label="Divin Residence operating model">
-          <div className="residence-model-core"><strong>Divin Residence</strong><span>One accountable housing operation</span></div>
+        <SectionIntro eyebrow="Accommodation & Industrial Support Portfolio" title={<>Spaces, housing and operations for <Mark>workforce continuity.</Mark></>} copy="This is not consumer real estate. It is corporate accommodation, relocation, property operation and industrial space support for large engineering and construction projects." />
+        <div className="residence-operating-model" aria-label="Divin Solutions accommodation and industrial support process">
+          <div className="residence-model-core"><strong>Divin Solutions</strong><span>One accountable accommodation operation</span></div>
           {[
-            ["01", "Source & Secure", "Identify properties, negotiate leases and align capacity with workforce location and project timing.", Route],
-            ["02", "Furnish & Activate", "Deliver furniture, appliances, comfort packs and active utilities before the team arrives.", Factory],
-            ["03", "Manage & Maintain", "Coordinate cleaning, maintenance, inspections, contracts and ongoing tenant support.", Wrench],
+            ["01", "Find the right space", "Identify housing, offices, warehouses or yards close enough to support the project schedule.", Route],
+            ["02", "Prepare before arrival", "Set up leases, furniture, appliances, utilities, internet and handover details before teams move in.", Factory],
+            ["03", "Operate day to day", "Coordinate cleaning, maintenance, inspections, contracts and ongoing tenant support.", Wrench],
           ].map(([index, title, copy, Icon], itemIndex) => { const Component = Icon as typeof Route; return <motion.article key={title as string} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }} transition={{ delay: itemIndex * 0.08, duration: 0.28 }}><span>{index as string}</span><Component size={28} strokeWidth={1.5} /><div><h3>{title as string}</h3><p>{copy as string}</p></div></motion.article>; })}
         </div>
         <div className="portfolio-pillar-grid">
@@ -1178,10 +1206,10 @@ function AccommodationsServices() {
           ))}
         </div>
         <div className="residence-advantage">
-          <SectionIntro eyebrow="Commercial Advantage" title={<>One partner. One invoice. <Mark>Zero housing distractions.</Mark></>} copy="Divin Residence centralizes the operational load that normally falls on HR, procurement and project management teams." />
-          <div className="residence-matrix" aria-label="Accommodation and industrial support portfolio matrix">
-            <div className="matrix-row matrix-head"><span>Service</span><span>Scale</span><span>Cadence</span><span>Asset Type</span><span>Business Outcome</span></div>
-            {residenceMatrix.map((row, index) => <motion.div className="matrix-row" key={row[0]} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06 }}>{row.map((cell) => <span key={cell}>{cell}</span>)}</motion.div>)}
+          <SectionIntro eyebrow="Commercial Advantage" title={<>One partner. One invoice. <Mark>No housing distractions.</Mark></>} copy="Divin Solutions centralizes the operational load that normally falls on HR, procurement and project management teams." />
+          <div className="residence-outcome-map" aria-label="Accommodation and industrial support operating outcomes">
+            <div className="residence-outcome-head"><span>Service area</span><span>What Divin handles</span><span>Operational result</span></div>
+            {residenceOutcomeMap.map(([service, handled, result], index) => <motion.article key={service} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.35 }} transition={{ delay: index * 0.05, duration: 0.28 }}><span>0{index + 1}</span><h3>{service}</h3><p>{handled}</p><strong>{result}</strong></motion.article>)}
           </div>
           <div className="residence-value-list">
             {residenceAdvantages.map(([title, copy], index) => <motion.article key={title} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.06 }}><span>0{index + 1}</span><BadgeCheck size={22} /><div><h3>{title}</h3><p>{copy}</p></div><strong>{index === 0 ? "Accountability" : index === 1 ? "Efficiency" : "Protection"}</strong></motion.article>)}
@@ -1193,7 +1221,43 @@ function AccommodationsServices() {
 }
 
 function Footer({ label = "Construction, supply & operational support" }: { label?: string }) {
-  return <footer className="site-footer"><span className="footer-brand"><img src={brandLogo} alt="" loading="lazy" decoding="async" />Divin Solutions</span><span>{label}</span></footer>;
+  const year = new Date().getFullYear();
+  return <footer className="site-footer"><div className="footer-inner"><div className="footer-main"><div className="footer-brand-block"><a href="/" className="footer-brand" aria-label="Divin Solutions home"><img src={brandLogo} alt="" loading="lazy" decoding="async" /><span>Divin Solutions</span></a><p>{label}. One commercial partner for project teams that need supply, execution and operational support to move with clarity.</p><div className="footer-badges"><span>Construction supply</span><span>Civil infrastructure</span><span>Operational spaces</span></div></div><nav className="footer-column" aria-label="Footer solution links"><strong>Solutions</strong>{solutionLinks.map((solution) => <a key={solution.href} href={solution.href}>{solution.label}</a>)}</nav><div className="footer-column"><strong>Direct contact</strong><a href="mailto:commercial@divinsolutions.pt"><Mail size={16} />commercial@divinsolutions.pt</a><a href="tel:+351928261397"><Phone size={16} />+351 928 261 397</a><a className="footer-whatsapp" href="https://wa.me/351928261397" target="_blank" rel="noreferrer"><MessageCircle size={16} />WhatsApp</a></div><nav className="footer-column" aria-label="Legal links"><strong>Company</strong><a href="/#about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/cookies-policy">Cookies</a><a href="/terms-and-conditions">Terms</a></nav></div><div className="footer-bottom"><span>© {year} Divin Solutions. All rights reserved.</span><span>Built for construction, infrastructure and industrial operations.</span></div></div></footer>;
+}
+
+const legalPages: Record<string, { title: string; intro: string; sections: [string, string][] }> = {
+  "/privacy-policy": {
+    title: "Privacy Policy",
+    intro: "Divin Solutions handles business enquiries and project information with care and only uses submitted data to respond to requests, prepare proposals and manage commercial communication.",
+    sections: [
+      ["Data collected", "We may collect business contact details and project information shared by email, phone, WhatsApp or direct commercial communication."],
+      ["Use of data", "Information is used to reply to enquiries, understand project requirements and coordinate follow-up communication."],
+      ["Data retention", "Commercial enquiry data is kept only for as long as needed for legitimate business communication or legal obligations."],
+    ],
+  },
+  "/cookies-policy": {
+    title: "Cookies Policy",
+    intro: "This website is designed to stay lightweight and clear. Cookies may be used only for essential site operation, analytics or future performance measurement.",
+    sections: [
+      ["Essential cookies", "These support basic website behaviour and security."],
+      ["Analytics", "If analytics are added, they should be used to understand page performance and improve the website experience."],
+      ["Control", "Visitors can manage cookies through their browser settings."],
+    ],
+  },
+  "/terms-and-conditions": {
+    title: "Terms and Conditions",
+    intro: "The information on this website presents Divin Solutions services for commercial evaluation. Final scope, availability, timelines and responsibilities are confirmed by written agreement.",
+    sections: [
+      ["Website content", "Service descriptions are informational and may change as project requirements, supplier availability or compliance conditions evolve."],
+      ["Commercial proposals", "Any service engagement is subject to formal quotation, contract terms and operational feasibility review."],
+      ["Liability", "Divin Solutions aims to provide accurate information, but website content should not replace project-specific technical or legal documentation."],
+    ],
+  },
+};
+
+function LegalPage({ page }: { page: keyof typeof legalPages }) {
+  const content = legalPages[page];
+  return <><Nav page="home" /><main className="legal-page"><section className="section"><div className="page-grid legal-grid"><p className="eyebrow">Legal</p><h1>{content.title}</h1><p className="hero-lede">{content.intro}</p><div className="legal-card-grid">{content.sections.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section></main><Footer /></>;
 }
 
 function HomePage() {
@@ -1228,5 +1292,6 @@ export default function App() {
   if (path === "/construction-supply") return <SupplyPage />;
   if (path === "/civil-construction") return <CivilConstructionPage />;
   if (path === "/accommodations-industrial-support") return <AccommodationsPage />;
+  if (path === "/privacy-policy" || path === "/cookies-policy" || path === "/terms-and-conditions") return <LegalPage page={path} />;
   return <HomePage />;
 }
