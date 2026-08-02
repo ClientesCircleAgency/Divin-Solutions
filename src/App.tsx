@@ -484,10 +484,24 @@ function LinearScrollHero({
 
     const syncVideoToScroll = () => {
       animationFrame = 0;
-      if (!desktop.matches || reducedMotion.matches || !Number.isFinite(videoEl.duration)) return;
+      if (!desktop.matches || reducedMotion.matches) return;
+      if (!Number.isFinite(videoEl.duration) || videoEl.duration <= 0) {
+        videoEl.load();
+        return;
+      }
       const progress = getProgress();
       const nextTime = progress * Math.max(videoEl.duration - 0.04, 0);
-      if (Math.abs(videoEl.currentTime - nextTime) > 0.035) videoEl.currentTime = nextTime;
+      if (Math.abs(videoEl.currentTime - nextTime) > 0.035) {
+        try {
+          if (typeof videoEl.fastSeek === "function" && Math.abs(videoEl.currentTime - nextTime) > 0.45) {
+            videoEl.fastSeek(nextTime);
+          } else {
+            videoEl.currentTime = nextTime;
+          }
+        } catch {
+          videoEl.currentTime = nextTime;
+        }
+      }
       const nextStep = Math.min(stages.length - 1, Math.floor(progress * stages.length));
       if (activeStepRef.current !== nextStep) {
         activeStepRef.current = nextStep;
@@ -523,23 +537,29 @@ function LinearScrollHero({
 
     const initialize = () => {
       videoEl.pause();
-      videoEl.currentTime = 0;
-      activeStepRef.current = 0;
-      setActiveStep(0);
-      section.style.setProperty("--hero-progress", "0");
       requestSync();
     };
 
+    videoEl.muted = true;
+    videoEl.playsInline = true;
+    videoEl.preload = "auto";
     videoEl.pause();
     videoEl.addEventListener("loadedmetadata", initialize);
+    videoEl.addEventListener("loadeddata", initialize);
+    videoEl.addEventListener("canplay", initialize);
+    videoEl.addEventListener("durationchange", initialize);
     window.addEventListener("scroll", requestSync, { passive: true });
     window.addEventListener("resize", requestSync);
     window.addEventListener("keydown", handleKeyDown);
+    videoEl.load();
     if (videoEl.readyState >= 1) initialize();
 
     return () => {
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
       videoEl.removeEventListener("loadedmetadata", initialize);
+      videoEl.removeEventListener("loadeddata", initialize);
+      videoEl.removeEventListener("canplay", initialize);
+      videoEl.removeEventListener("durationchange", initialize);
       window.removeEventListener("scroll", requestSync);
       window.removeEventListener("resize", requestSync);
       window.removeEventListener("keydown", handleKeyDown);
@@ -943,10 +963,24 @@ function CivilHero() {
 
     const syncVideoToScroll = () => {
       animationFrame = 0;
-      if (!desktop.matches || reducedMotion.matches || !Number.isFinite(video.duration)) return;
+      if (!desktop.matches || reducedMotion.matches) return;
+      if (!Number.isFinite(video.duration) || video.duration <= 0) {
+        video.load();
+        return;
+      }
       const progress = getProgress();
       const nextTime = progress * Math.max(video.duration - 0.04, 0);
-      if (Math.abs(video.currentTime - nextTime) > 0.035) video.currentTime = nextTime;
+      if (Math.abs(video.currentTime - nextTime) > 0.035) {
+        try {
+          if (typeof video.fastSeek === "function" && Math.abs(video.currentTime - nextTime) > 0.45) {
+            video.fastSeek(nextTime);
+          } else {
+            video.currentTime = nextTime;
+          }
+        } catch {
+          video.currentTime = nextTime;
+        }
+      }
       const nextStep = Math.min(3, Math.floor(progress * 4));
       if (activeStepRef.current !== nextStep) {
         activeStepRef.current = nextStep;
@@ -982,23 +1016,29 @@ function CivilHero() {
 
     const initialize = () => {
       video.pause();
-      video.currentTime = 0;
-      activeStepRef.current = 0;
-      setActiveStep(0);
-      section.style.setProperty("--hero-progress", "0");
       requestSync();
     };
 
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = "auto";
     video.pause();
     video.addEventListener("loadedmetadata", initialize);
+    video.addEventListener("loadeddata", initialize);
+    video.addEventListener("canplay", initialize);
+    video.addEventListener("durationchange", initialize);
     window.addEventListener("scroll", requestSync, { passive: true });
     window.addEventListener("resize", requestSync);
     window.addEventListener("keydown", handleKeyDown);
+    video.load();
     if (video.readyState >= 1) initialize();
 
     return () => {
       if (animationFrame) window.cancelAnimationFrame(animationFrame);
       video.removeEventListener("loadedmetadata", initialize);
+      video.removeEventListener("loadeddata", initialize);
+      video.removeEventListener("canplay", initialize);
+      video.removeEventListener("durationchange", initialize);
       window.removeEventListener("scroll", requestSync);
       window.removeEventListener("resize", requestSync);
       window.removeEventListener("keydown", handleKeyDown);
