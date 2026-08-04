@@ -868,33 +868,38 @@ function SupplyControlRoom() {
   );
 }
 
-function useSteppedChapter() {
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const [active, setActive] = useState(0);
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const update = () => {
-      const top = section.getBoundingClientRect().top + window.scrollY;
-      setActive(Math.max(0, Math.min(chapters.length - 1, Math.round((window.scrollY - top) / window.innerHeight))));
-    };
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
-  return { active, sectionRef };
-}
-
 function ScrollSystem() {
-  const { active, sectionRef } = useSteppedChapter();
-  const chapter = chapters[active];
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selected = chapters[selectedIndex];
+  const selectedCapability = capabilities[Math.max(0, selectedIndex - 1)] ?? capabilities[selectedIndex];
+  const selectedVisual = selectedCapability?.detailVisual ?? selectedCapability?.visual ?? systemVisuals[selectedIndex];
   return (
-    <section id="system" className="scroll-system" ref={sectionRef}>
-      <div className="scroll-sticky">
-        <AnimatePresence mode="wait"><motion.img key={chapter.index} className="scroll-image" src={systemVisuals[active]} alt="" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} /></AnimatePresence>
-        <div className="scroll-gradient" />
-        <div className="chapter-panel"><div className="chapter-index"><span>PILLAR</span><strong>{chapter.index}</strong></div><AnimatePresence mode="wait"><motion.div key={chapter.index} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}><h2>{chapter.title}</h2><p>{chapter.copy}</p><ul>{chapter.bullets.map((item) => <li key={item}>{item}</li>)}</ul></motion.div></AnimatePresence></div>
-        <div className="progress-rail"><span style={{ height: `${((active + 1) / chapters.length) * 100}%` }} /></div>
+    <section id="system" className="section system-workbench-section">
+      <div className="page-grid">
+        <SectionIntro eyebrow="Supply System" title={<>One supply layer across <Mark>every site pillar.</Mark></>} copy="This view connects the individual supply categories into one practical operating system: select a pillar to see what changes on site and what Divin coordinates behind it." />
+        <div className="system-workbench">
+          <div className="system-tabs" role="tablist" aria-label="Supply system pillars">
+            {chapters.map((chapter, index) => (
+              <button id={`system-tab-${chapter.index}`} className={selectedIndex === index ? "system-tab active" : "system-tab"} key={chapter.index} onClick={() => setSelectedIndex(index)} type="button" role="tab" tabIndex={selectedIndex === index ? 0 : -1} aria-selected={selectedIndex === index} aria-controls={`system-panel-${chapter.index}`}>
+                <span>{chapter.index}</span>
+                <strong>{chapter.title}</strong>
+              </button>
+            ))}
+          </div>
+          <AnimatePresence mode="wait">
+            <motion.article id={`system-panel-${selected.index}`} className="capability-detail system-detail" key={selected.index} role="tabpanel" aria-labelledby={`system-tab-${selected.index}`} initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -18 }}>
+              <div className="capability-image system-image"><img src={selectedVisual} alt={`${selected.title} supply system pillar`} loading="lazy" decoding="async" /></div>
+              <div className="capability-copy system-copy">
+                <p className="eyebrow">Pillar {selected.index}</p>
+                <h3>{selected.title}</h3>
+                <p>{selected.copy}</p>
+                <div className="system-bullet-grid">
+                  {selected.bullets.map((item) => <span key={item}>{item}</span>)}
+                </div>
+              </div>
+            </motion.article>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );
