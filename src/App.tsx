@@ -872,7 +872,7 @@ function ScrollSystem() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const selected = chapters[selectedIndex];
   const selectedCapability = capabilities[Math.max(0, selectedIndex - 1)] ?? capabilities[selectedIndex];
-  const selectedVisual = selectedCapability?.detailVisual ?? selectedCapability?.visual ?? systemVisuals[selectedIndex];
+  const selectedVisual = systemVisuals[selectedIndex] ?? selectedCapability?.visual ?? selectedCapability?.detailVisual;
   return (
     <section id="system" className="section system-workbench-section">
       <div className="page-grid">
