@@ -399,6 +399,8 @@ function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" })
       </a>
       <a href="/" className="brand-wordmark" aria-label="Divin Solutions home">Divin <strong>Solutions</strong></a>
       <nav className="desktop-nav" aria-label="Primary navigation">
+        <a href="/">Home Page</a>
+        <a href="/about-us">About Us</a>
         <div className="solutions-menu" onMouseEnter={keepSolutionsOpen} onMouseLeave={scheduleSolutionsClose} onFocus={keepSolutionsOpen}>
           <button type="button" className={activeSolution ? "solutions-trigger active" : "solutions-trigger"} onClick={() => setSolutionsOpen((value) => !value)} aria-expanded={solutionsOpen} aria-controls="solutions-dropdown">
             Solutions <ChevronDown size={16} />
@@ -415,8 +417,6 @@ function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" })
             )}
           </AnimatePresence>
         </div>
-        <a href="/#about">About</a>
-        <a href="#contact">Contact</a>
       </nav>
       <button className="icon-button mobile-menu-button" onClick={() => setOpen(true)} aria-label="Open menu" aria-expanded={open} aria-controls="mobile-navigation">
         <Menu size={20} />
@@ -425,10 +425,10 @@ function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" })
         {open && (
           <motion.div id="mobile-navigation" className="mobile-menu" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <button className="icon-button mobile-close" onClick={() => setOpen(false)} aria-label="Close menu"><X size={20} /></button>
+            <a href="/" onClick={() => setOpen(false)}>Home Page</a>
+            <a href="/about-us" onClick={() => setOpen(false)}>About Us</a>
             <span className="mobile-menu-label">Solutions</span>
             {solutionLinks.map((solution) => <a key={solution.href} href={solution.href} className={activeSolution === solution.label ? "service-switch" : ""} onClick={() => setOpen(false)}>{solution.label}</a>)}
-            <a href="/#about" onClick={() => setOpen(false)}>About</a>
-            <a href="#contact" onClick={() => setOpen(false)}>Contact</a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -1267,35 +1267,43 @@ function AccommodationsServices() {
 
 function Footer({ label = "Construction, supply & operational support" }: { label?: string }) {
   const year = new Date().getFullYear();
-  return <footer className="site-footer"><div className="footer-inner"><div className="footer-main"><div className="footer-brand-block"><a href="/" className="footer-brand" aria-label="Divin Solutions home"><img src={brandLogo} alt="" loading="lazy" decoding="async" /><span>Divin Solutions</span></a><p>{label}. One commercial partner for project teams that need supply, execution and operational support to move with clarity.</p><div className="footer-badges"><span>Construction supply</span><span>Civil infrastructure</span><span>Operational spaces</span></div></div><nav className="footer-column" aria-label="Footer solution links"><strong>Solutions</strong>{solutionLinks.map((solution) => <a key={solution.href} href={solution.href}>{solution.label}</a>)}</nav><div className="footer-column"><strong>Direct contact</strong><a href="mailto:commercial@divinsolutions.pt"><Mail size={16} />commercial@divinsolutions.pt</a><a href="tel:+351928261397"><Phone size={16} />+351 928 261 397</a><a className="footer-whatsapp" href="https://wa.me/351928261397" target="_blank" rel="noreferrer"><MessageCircle size={16} />WhatsApp</a></div><nav className="footer-column" aria-label="Legal links"><strong>Company</strong><a href="/#about">About</a><a href="/privacy-policy">Privacy Policy</a><a href="/cookies-policy">Cookies</a><a href="/terms-and-conditions">Terms</a></nav></div><div className="footer-bottom"><span>© {year} Divin Solutions. All rights reserved.</span><span>Built for construction, infrastructure and industrial operations.</span></div></div></footer>;
+  return <footer className="site-footer"><div className="footer-inner"><div className="footer-main"><div className="footer-brand-block"><a href="/" className="footer-brand" aria-label="Divin Solutions home"><img src={brandLogo} alt="" loading="lazy" decoding="async" /><span>Divin Solutions</span></a><p>{label}. One commercial partner for project teams that need supply, execution and operational support to move with clarity.</p><div className="footer-badges"><span>Construction supply</span><span>Civil infrastructure</span><span>Operational spaces</span></div></div><nav className="footer-column" aria-label="Footer solution links"><strong>Solutions</strong>{solutionLinks.map((solution) => <a key={solution.href} href={solution.href}>{solution.label}</a>)}</nav><div className="footer-column"><strong>Direct contact</strong><a href="mailto:commercial@divinsolutions.pt"><Mail size={16} />commercial@divinsolutions.pt</a><a href="tel:+351928261397"><Phone size={16} />+351 928 261 397</a><a className="footer-whatsapp" href="https://wa.me/351928261397" target="_blank" rel="noreferrer"><MessageCircle size={16} />WhatsApp</a></div><nav className="footer-column" aria-label="Legal links"><strong>Legal</strong><a href="/privacy-policy">Privacy Policy</a><a href="/terms-and-conditions">Terms & Conditions</a><a href="/cookies-policy">Cookies Policy</a></nav></div><div className="footer-bottom"><span>© {year} Divin Solutions. All rights reserved.</span><span>Built for construction, infrastructure and industrial operations.</span></div></div></footer>;
 }
 
 const legalPages: Record<string, { title: string; intro: string; sections: [string, string][] }> = {
   "/privacy-policy": {
     title: "Privacy Policy",
-    intro: "Divin Solutions handles business enquiries and project information with care and only uses submitted data to respond to requests, prepare proposals and manage commercial communication.",
+    intro: "Divin Solutions handles business enquiries, project information and commercial communication with care. This policy explains what information may be collected through the website or direct contact and how it is used.",
     sections: [
-      ["Data collected", "We may collect business contact details and project information shared by email, phone, WhatsApp or direct commercial communication."],
-      ["Use of data", "Information is used to reply to enquiries, understand project requirements and coordinate follow-up communication."],
-      ["Data retention", "Commercial enquiry data is kept only for as long as needed for legitimate business communication or legal obligations."],
+      ["Information we may collect", "We may collect business contact details, company information, project location, operational requirements and any files or notes voluntarily shared by email, phone, WhatsApp or direct commercial communication."],
+      ["How information is used", "Information is used to reply to enquiries, understand project requirements, prepare commercial follow-up, coordinate internal review and support future communication about relevant Divin Solutions services."],
+      ["Legal basis", "Where applicable, information is processed to respond to a requested commercial contact, prepare pre-contractual communication, fulfil legitimate business interests or comply with legal obligations."],
+      ["Sharing and suppliers", "Project information may be reviewed internally and, when necessary, shared with trusted operational partners only to evaluate feasibility, availability, compliance or delivery requirements."],
+      ["Data retention", "Commercial enquiry data is kept only for as long as needed for business communication, proposal follow-up, operational record keeping or legal obligations."],
+      ["Your rights", "You may request access, correction or deletion of personal data by contacting Divin Solutions through the contact details available on this website."],
     ],
   },
   "/cookies-policy": {
     title: "Cookies Policy",
-    intro: "This website is designed to stay lightweight and clear. Cookies may be used only for essential site operation, analytics or future performance measurement.",
+    intro: "This website is designed to remain lightweight, clear and respectful of visitor privacy. Cookies and similar technologies may be used only for essential operation, analytics or future performance measurement.",
     sections: [
-      ["Essential cookies", "These support basic website behaviour and security."],
-      ["Analytics", "If analytics are added, they should be used to understand page performance and improve the website experience."],
-      ["Control", "Visitors can manage cookies through their browser settings."],
+      ["Essential cookies", "Essential cookies support basic website behaviour, security and reliable navigation. These are used only when required for the site to function correctly."],
+      ["Analytics cookies", "If analytics are enabled, they are used to understand page performance, content engagement and technical behaviour so the website experience can be improved."],
+      ["Third-party services", "The website may connect to services such as analytics, hosting, embedded media or communication links. These services may apply their own privacy and cookie practices."],
+      ["Managing cookies", "Visitors can block, delete or manage cookies through their browser settings. Some site features may behave differently if cookies are disabled."],
+      ["Updates", "This policy may be updated as the website evolves, especially if new measurement, media or marketing tools are added."],
     ],
   },
   "/terms-and-conditions": {
     title: "Terms and Conditions",
-    intro: "The information on this website presents Divin Solutions services for commercial evaluation. Final scope, availability, timelines and responsibilities are confirmed by written agreement.",
+    intro: "The information on this website presents Divin Solutions services for commercial evaluation. Final scope, availability, responsibilities, timelines and commercial terms are confirmed by written agreement.",
     sections: [
-      ["Website content", "Service descriptions are informational and may change as project requirements, supplier availability or compliance conditions evolve."],
-      ["Commercial proposals", "Any service engagement is subject to formal quotation, contract terms and operational feasibility review."],
-      ["Liability", "Divin Solutions aims to provide accurate information, but website content should not replace project-specific technical or legal documentation."],
+      ["Website content", "Service descriptions are provided for general business information and may change as project requirements, supplier availability, technical conditions or compliance obligations evolve."],
+      ["No automatic engagement", "Use of this website or direct contact with Divin Solutions does not create a service agreement. Any engagement depends on formal review, quotation and written confirmation."],
+      ["Commercial proposals", "Any service engagement is subject to operational feasibility, supplier availability, agreed scope, contract terms and any required technical or compliance validation."],
+      ["Technical information", "Website content should not replace project-specific engineering documentation, safety files, contractual records, legal advice or formal technical specifications."],
+      ["External links", "The website may include links to external platforms, such as WhatsApp or social media. Divin Solutions is not responsible for third-party platform availability or policies."],
+      ["Limitation", "Divin Solutions aims to keep information accurate and current, but cannot guarantee that every website detail will be complete, uninterrupted or suitable for every project context."],
     ],
   },
 };
@@ -1303,6 +1311,52 @@ const legalPages: Record<string, { title: string; intro: string; sections: [stri
 function LegalPage({ page }: { page: keyof typeof legalPages }) {
   const content = legalPages[page];
   return <><Nav page="home" /><main className="legal-page"><section className="section"><div className="page-grid legal-grid"><p className="eyebrow">Legal</p><h1>{content.title}</h1><p className="hero-lede">{content.intro}</p><div className="legal-card-grid">{content.sections.map(([title, copy]) => <article key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section></main><Footer /></>;
+}
+
+function AboutUsPage() {
+  const principles = [
+    ["Construction-native coordination", "Divin Solutions understands that delays often begin before execution: missing resources, incomplete documentation, unclear handoffs and fragmented supplier ownership."],
+    ["One accountable commercial layer", "The company connects supply, civil execution and operational spaces so project teams can reduce scattered communication and keep responsibility easier to track."],
+    ["Built around active sites", "Services are structured around practical site needs: materials, machinery, welfare infrastructure, logistics, HSE records, workforce support, civil works and accommodation."],
+    ["Operational clarity for decision-makers", "The goal is to make complex project support easier to understand, source, approve and manage across large construction and industrial environments."],
+  ] as const;
+
+  return (
+    <><Nav page="home" /><main className="legal-page about-us-page">
+      <section className="section">
+        <div className="page-grid two-col">
+          <div>
+            <p className="eyebrow">About Us</p>
+            <h1>Divin Solutions coordinates the operational layer around <Mark>complex construction projects.</Mark></h1>
+            <p className="hero-lede">Divin Solutions evolved from construction and real-estate execution into a broader business partner for companies that need resources, infrastructure and operational spaces coordinated with commercial clarity.</p>
+          </div>
+          <div className="about-proof-grid">
+            {principles.map(([title, copy]) => <article key={title}><BadgeCheck size={22} /><h3>{title}</h3><p>{copy}</p></article>)}
+          </div>
+        </div>
+      </section>
+      <section className="section">
+        <div className="page-grid">
+          <SectionIntro eyebrow="What We Coordinate" title={<>Three service areas. <Mark>One operating mindset.</Mark></>} copy="Each Divin Solutions business area addresses a different operational pressure, but the underlying goal is the same: fewer blockers, fewer handoffs and clearer accountability." />
+          <div className="solution-card-grid">
+            {solutionLinks.map((solution) => {
+              const Icon = solution.icon;
+              return <a className="solution-card" href={solution.href} key={solution.href}><div className="solution-card-icon"><Icon size={30} /></div><p className="eyebrow">{solution.eyebrow}</p><h3>{solution.label}</h3><p>{solution.copy}</p><strong>Explore solution <ArrowRight size={17} /></strong></a>;
+            })}
+          </div>
+        </div>
+      </section>
+      <section className="section">
+        <div className="page-grid">
+          <SectionIntro eyebrow="How We Work" title={<>A practical partner for project teams that need <Mark>momentum.</Mark></>} copy="Divin Solutions is positioned for construction companies, industrial operators, developers and project teams that need support services to arrive ready, documented and coordinated." />
+          <div className="process-line">
+            {[['01', 'Understand', 'Clarify the project context, location, work fronts, timing and operational constraints.'], ['02', 'Structure', 'Define which supply, civil or operational-space areas need coordination.'], ['03', 'Coordinate', 'Connect suppliers, documents, logistics, HSE requirements and handoff responsibilities.'], ['04', 'Mobilize', 'Move resources, teams or spaces into place with clearer ownership and timing.'], ['05', 'Support', 'Adapt the solution as project requirements, phases and risks change.']].map(([index, title, copy]) => <article className="process-step" key={index}><span>{index}</span><h3>{title}</h3><p>{copy}</p></article>)}
+          </div>
+        </div>
+      </section>
+      <Contact mode="general" />
+    </main><Footer /></>
+  );
 }
 
 function HomePage() {
@@ -1327,9 +1381,13 @@ export default function App() {
   useEffect(() => {
     const titles: Record<string, string> = {
       "/": "Divin Solutions | Construction, Supply & Operational Support",
+      "/about-us": "About Us | Divin Solutions",
       "/construction-supply": "Construction Supply | Divin Solutions",
       "/civil-construction": "Civil Construction | Divin Solutions",
       "/accommodations-industrial-support": "Accommodations & Industrial Support | Divin Solutions",
+      "/privacy-policy": "Privacy Policy | Divin Solutions",
+      "/terms-and-conditions": "Terms & Conditions | Divin Solutions",
+      "/cookies-policy": "Cookies Policy | Divin Solutions",
     };
     document.title = titles[path] ?? titles["/"];
   }, [path]);
@@ -1337,6 +1395,7 @@ export default function App() {
   if (path === "/construction-supply") return <SupplyPage />;
   if (path === "/civil-construction") return <CivilConstructionPage />;
   if (path === "/accommodations-industrial-support") return <AccommodationsPage />;
+  if (path === "/about-us") return <AboutUsPage />;
   if (path === "/privacy-policy" || path === "/cookies-policy" || path === "/terms-and-conditions") return <LegalPage page={path} />;
   return <HomePage />;
 }
