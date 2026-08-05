@@ -59,6 +59,49 @@ const accommodationsHero = {
   heroPoster: asset("rebrand-light/accommodations/accommodations-hero-scroll-poster.webp"),
 };
 
+const siteUrl = "https://www.divinsolutions.com";
+const defaultSeoImage = `${siteUrl}${homeHero.heroPoster}`;
+
+const seoPages: Record<string, { title: string; description: string; image?: string }> = {
+  "/": {
+    title: "Divin Solutions | Construction, Supply & Operational Support",
+    description: "Divin Solutions coordinates construction supply, civil works and operational support spaces for industrial, logistics and large-scale construction projects.",
+    image: defaultSeoImage,
+  },
+  "/about-us": {
+    title: "About Us | Divin Solutions",
+    description: "Learn how Divin Solutions coordinates supply, civil execution and operational spaces around complex construction and industrial projects.",
+    image: defaultSeoImage,
+  },
+  "/construction-supply": {
+    title: "Construction Supply | Divin Solutions",
+    description: "Construction materials, machinery, site infrastructure, logistics, documentation, waste management and workforce support coordinated through one partner.",
+    image: `${siteUrl}${supplyHero.heroPoster}`,
+  },
+  "/civil-construction": {
+    title: "Civil Construction | Divin Solutions",
+    description: "Civil construction and infrastructure delivery for industrial projects, from site preparation and foundations to drainage, utilities and technical handover.",
+    image: `${siteUrl}${asset("rebrand-light/civil/civil-hero-scroll-poster.webp")}`,
+  },
+  "/accommodations-industrial-support": {
+    title: "Accommodations & Industrial Support | Divin Solutions",
+    description: "Corporate accommodation, relocation, property management, offices, warehouses, yards and support spaces for construction and industrial operations.",
+    image: `${siteUrl}${accommodationsHero.heroPoster}`,
+  },
+  "/privacy-policy": {
+    title: "Privacy Policy | Divin Solutions",
+    description: "Privacy policy for Divin Solutions business enquiries, project information and commercial communication.",
+  },
+  "/terms-and-conditions": {
+    title: "Terms & Conditions | Divin Solutions",
+    description: "Terms and conditions for using the Divin Solutions website and reviewing service information.",
+  },
+  "/cookies-policy": {
+    title: "Cookies Policy | Divin Solutions",
+    description: "Cookies policy for the Divin Solutions website, including essential cookies, analytics and browser controls.",
+  },
+};
+
 const civilAssets = {
   heroDesktop: asset("rebrand-light/civil/civil-hero-desktop.webp"),
   heroMobile: asset("rebrand-light/civil/civil-hero-mobile.webp"),
@@ -1379,17 +1422,84 @@ export default function App() {
   const path = window.location.pathname.replace(/\/$/, "") || "/";
 
   useEffect(() => {
-    const titles: Record<string, string> = {
-      "/": "Divin Solutions | Construction, Supply & Operational Support",
-      "/about-us": "About Us | Divin Solutions",
-      "/construction-supply": "Construction Supply | Divin Solutions",
-      "/civil-construction": "Civil Construction | Divin Solutions",
-      "/accommodations-industrial-support": "Accommodations & Industrial Support | Divin Solutions",
-      "/privacy-policy": "Privacy Policy | Divin Solutions",
-      "/terms-and-conditions": "Terms & Conditions | Divin Solutions",
-      "/cookies-policy": "Cookies Policy | Divin Solutions",
+    const seo = seoPages[path] ?? seoPages["/"];
+    const canonical = `${siteUrl}${path === "/" ? "" : path}`;
+    const image = seo.image ?? defaultSeoImage;
+
+    const setMeta = (selector: string, attribute: "name" | "property", value: string, content: string) => {
+      let element = document.head.querySelector<HTMLMetaElement>(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, value);
+        document.head.appendChild(element);
+      }
+      element.content = content;
     };
-    document.title = titles[path] ?? titles["/"];
+
+    let canonicalLink = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement("link");
+      canonicalLink.rel = "canonical";
+      document.head.appendChild(canonicalLink);
+    }
+
+    document.title = seo.title;
+    canonicalLink.href = canonical;
+    setMeta('meta[name="description"]', "name", "description", seo.description);
+    setMeta('meta[property="og:title"]', "property", "og:title", seo.title);
+    setMeta('meta[property="og:description"]', "property", "og:description", seo.description);
+    setMeta('meta[property="og:type"]', "property", "og:type", "website");
+    setMeta('meta[property="og:url"]', "property", "og:url", canonical);
+    setMeta('meta[property="og:image"]', "property", "og:image", image);
+    setMeta('meta[name="twitter:card"]', "name", "twitter:card", "summary_large_image");
+    setMeta('meta[name="twitter:title"]', "name", "twitter:title", seo.title);
+    setMeta('meta[name="twitter:description"]', "name", "twitter:description", seo.description);
+    setMeta('meta[name="twitter:image"]', "name", "twitter:image", image);
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": `${siteUrl}/#organization`,
+          name: "Divin Solutions",
+          url: siteUrl,
+          logo: `${siteUrl}${brandLogo}`,
+          contactPoint: [{
+            "@type": "ContactPoint",
+            telephone: "+351928261397",
+            contactType: "commercial enquiries",
+            areaServed: "PT",
+            availableLanguage: ["en", "pt"],
+          }],
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${siteUrl}/#website`,
+          name: "Divin Solutions",
+          url: siteUrl,
+          publisher: { "@id": `${siteUrl}/#organization` },
+        },
+        {
+          "@type": "WebPage",
+          "@id": `${canonical}#webpage`,
+          url: canonical,
+          name: seo.title,
+          description: seo.description,
+          isPartOf: { "@id": `${siteUrl}/#website` },
+          about: { "@id": `${siteUrl}/#organization` },
+        },
+      ],
+    };
+
+    let schemaScript = document.head.querySelector<HTMLScriptElement>('script[data-schema="divin-solutions"]');
+    if (!schemaScript) {
+      schemaScript = document.createElement("script");
+      schemaScript.type = "application/ld+json";
+      schemaScript.dataset.schema = "divin-solutions";
+      document.head.appendChild(schemaScript);
+    }
+    schemaScript.text = JSON.stringify(schema);
   }, [path]);
 
   if (path === "/construction-supply") return <SupplyPage />;
