@@ -35,6 +35,12 @@ import {
   processSteps,
 } from "./data";
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void;
+  }
+}
+
 const systemVisuals = [asset("scroll-frames/00-blueprint-start.jpg"), ...capabilities.map((item) => item.visual)];
 const brandLogo = asset("logo/edited/divin-logo-green-transparent.webp");
 
@@ -1500,6 +1506,12 @@ export default function App() {
       document.head.appendChild(schemaScript);
     }
     schemaScript.text = JSON.stringify(schema);
+
+    window.gtag?.("event", "page_view", {
+      page_title: seo.title,
+      page_location: canonical,
+      page_path: path,
+    });
   }, [path]);
 
   if (path === "/construction-supply") return <SupplyPage />;
