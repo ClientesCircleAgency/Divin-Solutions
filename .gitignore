@@ -19,3 +19,4 @@ qa-screenshots/
 asset-archive/
 
 .vercel
+.env.local
