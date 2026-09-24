@@ -16,5 +16,6 @@ vite-dev.*.log
 .edge-*/
 .uv-cache/
 qa-screenshots/
+asset-archive/
 
 .vercel

@@ -48,6 +48,29 @@ a {
   text-decoration: none;
 }
 
+.skip-link {
+  position: fixed;
+  z-index: 10000;
+  left: 18px;
+  top: 18px;
+  transform: translateY(-160%);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--blue);
+  box-shadow: 0 16px 38px rgba(15, 35, 70, 0.14);
+  padding: 12px 16px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 850;
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 3px solid rgba(7, 107, 96, 0.26);
+  outline-offset: 3px;
+}
+
 button,
 input,
 select,
@@ -364,6 +387,78 @@ h2 .copy-mark {
   background: rgba(7, 107, 96, 0.14);
 }
 
+.language-switch {
+  position: relative;
+  isolation: isolate;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  width: 76px;
+  min-width: 76px;
+  min-height: 42px;
+  border: 1px solid rgba(183, 208, 201, 0.9);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--muted);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  padding: 3px;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.language-switch::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  background: var(--green);
+  box-shadow: 0 10px 26px rgba(7, 107, 96, 0.18);
+  transform: translateX(0);
+  transition: transform 180ms ease;
+}
+
+.language-switch-pt::before {
+  transform: translateX(100%);
+}
+
+.language-switch span {
+  display: grid;
+  min-height: 34px;
+  place-items: center;
+  color: var(--muted);
+  transition: color 180ms ease;
+}
+
+.language-switch:not(.language-switch-pt) span:first-child,
+.language-switch-pt span:last-child {
+  color: #fff;
+}
+
+.language-switch:hover,
+.language-switch:focus-visible {
+  border-color: rgba(7, 107, 96, 0.34);
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--green-dark);
+  outline: none;
+}
+
+.language-switch:focus-visible {
+  box-shadow: 0 0 0 3px rgba(7, 107, 96, 0.14);
+}
+
+.mobile-language-switch {
+  display: none;
+}
+
 .solutions-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -646,6 +741,19 @@ h2 .copy-mark {
   width: min(640px, 100%);
   max-width: 640px;
   min-width: 0;
+}
+
+.hero-line {
+  display: inline;
+}
+
+.lede-line {
+  display: inline;
+}
+
+.about-us-page .about-line,
+.about-us-page .about-lede-line {
+  display: block !important;
 }
 
 .hero-lede {
@@ -3650,9 +3758,25 @@ h2 .copy-mark {
 }
 
 .spec-panel {
+  display: grid;
+  grid-template-rows: 0fr;
   overflow: hidden;
   border-top: 1px solid rgba(183, 208, 201, 0.72);
   background: rgba(247, 251, 250, 0.72);
+  opacity: 0;
+  transition:
+    grid-template-rows 220ms ease,
+    opacity 180ms ease;
+}
+
+.spec-panel.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.spec-panel-inner {
+  min-height: 0;
+  overflow: hidden;
   padding: 0 18px 18px;
 }
 
@@ -4681,7 +4805,7 @@ textarea:focus {
   .metric-strip,
   .technical-grid,
   .case-study-head,
-  .terra-detail-grid {
+  .reference-detail-grid {
     grid-template-columns: 1fr;
   }
 
@@ -4772,8 +4896,13 @@ textarea:focus {
   .hero-copy,
   .hero-copy h1,
   .hero-copy p {
-    width: calc(100vw - 28px);
-    max-width: calc(100vw - 28px);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .hero-copy h1 {
+    overflow-wrap: break-word;
   }
 
   .button {
@@ -4798,11 +4927,11 @@ textarea:focus {
   .civil-service-layout,
   .technical-grid,
   .case-study-head,
-  .terra-detail-grid {
+  .reference-detail-grid {
     grid-template-columns: 1fr;
   }
 
-  .terra-detail-grid > div:last-child strong {
+  .reference-detail-grid > div:last-child strong {
     white-space: normal;
   }
 
@@ -5924,7 +6053,7 @@ textarea:focus {
   line-height: 1.48;
 }
 
-/* Project Terra: turn the reference map into an executive priority dashboard. */
+/* Reference scope: turn the work-area map into an executive priority dashboard. */
 .boq-dashboard {
   position: relative;
   overflow: hidden;
@@ -6366,7 +6495,7 @@ textarea:focus {
   }
 }
 
-/* Static image heroes are temporary posters until the final videos are produced. */
+/* Static hero media provides poster/fallback coverage for video-led sections. */
 .static-hero {
   position: relative;
   min-height: 100svh;
@@ -7385,60 +7514,60 @@ textarea:focus {
   margin: 0;
 }
 
-.terra-detail-grid {
+.reference-detail-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.7fr);
   gap: 18px;
   margin-top: 20px;
 }
 
-.terra-detail-grid > div {
+.reference-detail-grid > div {
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.86);
   box-shadow: 0 16px 46px rgba(15, 35, 70, 0.05);
   padding: 22px;
 }
 
-.terra-detail-grid h3 {
+.reference-detail-grid h3 {
   margin-bottom: 20px;
 }
 
-.terra-detail-grid article {
+.reference-detail-grid article {
   display: grid;
   gap: 10px;
   border-top: 1px solid var(--line);
   padding: 14px 0 0;
 }
 
-.terra-detail-grid article + article {
+.reference-detail-grid article + article {
   margin-top: 14px;
 }
 
-.terra-detail-grid > div:first-child article {
+.reference-detail-grid > div:first-child article {
   grid-template-columns: 22px minmax(0, 1fr);
 }
 
-.terra-detail-grid svg {
+.reference-detail-grid svg {
   color: var(--blue);
   margin-top: 3px;
 }
 
-.terra-detail-grid p {
+.reference-detail-grid p {
   margin: 4px 0 0;
   line-height: 1.55;
 }
 
-.terra-detail-grid > div:last-child article {
+.reference-detail-grid > div:last-child article {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: baseline;
   gap: 18px;
 }
 
-.terra-detail-grid span {
+.reference-detail-grid span {
   color: var(--muted);
 }
 
-.terra-detail-grid > div:last-child strong {
+.reference-detail-grid > div:last-child strong {
   color: var(--blue);
   font-family: var(--font-display);
   font-size: 1.08rem;
@@ -7922,7 +8051,7 @@ textarea:focus {
     gap: 6px;
   }
 
-  .terra-detail-grid {
+  .reference-detail-grid {
     grid-template-columns: 1fr;
   }
 
@@ -7999,7 +8128,7 @@ textarea:focus {
     height: 4px;
   }
 
-  .terra-detail-grid > div:last-child article {
+  .reference-detail-grid > div:last-child article {
     grid-template-columns: 1fr;
   }
 
@@ -8123,12 +8252,34 @@ textarea:focus {
   .brand-wordmark {
     position: relative;
     left: auto;
-    max-width: calc(100vw - 132px);
+    max-width: calc(100vw - 224px);
     overflow: hidden;
     font-size: clamp(1rem, 5vw, 1.18rem);
     text-align: center;
     text-overflow: ellipsis;
     transform: none;
+  }
+
+  .desktop-nav .language-switch {
+    display: none;
+  }
+
+  .mobile-language-switch {
+    position: fixed;
+    z-index: 60;
+    top: 18px;
+    left: 58px;
+    right: auto;
+    display: inline-grid;
+    width: 68px;
+    min-width: 68px;
+    min-height: 42px;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .mobile-language-switch span {
+    min-height: 34px;
+    font-size: 0.64rem;
   }
 
   .mobile-menu-button {
@@ -8219,21 +8370,58 @@ textarea:focus {
   .scroll-video-stage .hero-content {
     display: grid;
     min-height: 100dvh;
+    grid-template-columns: minmax(0, 1fr);
     align-content: end;
     padding-top: 112px;
     padding-bottom: 44px;
   }
 
+  .scroll-video-stage .hero-copy,
+  .scroll-video-stage .hero-copy h1,
+  .scroll-video-stage .hero-copy p {
+    width: min(100%, calc(100vw - 32px));
+    max-width: min(100%, calc(100vw - 32px));
+    min-width: 0;
+  }
+
   .scroll-video-stage .hero-copy h1 {
-    font-size: clamp(1.78rem, 8.2vw, 2.12rem);
-    line-height: 1.06;
+    font-size: clamp(1.66rem, 7.6vw, 2rem);
+    line-height: 1.08;
     margin-bottom: 16px;
+    overflow-wrap: break-word;
   }
 
   .scroll-video-stage .hero-lede {
     max-width: 100%;
     font-size: 1rem;
     line-height: 1.55;
+  }
+
+  .gateway-hero .hero-copy,
+  .gateway-hero .hero-copy h1,
+  .gateway-hero .hero-copy p {
+    width: min(100%, calc(100vw - 68px));
+    max-width: min(100%, calc(100vw - 68px));
+  }
+
+  .gateway-hero .hero-copy h1 {
+    font-size: clamp(1.42rem, 6.8vw, 1.72rem);
+    line-height: 1.12;
+    text-wrap: auto;
+  }
+
+  .gateway-hero .hero-lede {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .scroll-video-stage .hero-line {
+    display: block;
+  }
+
+  .scroll-video-stage .lede-line {
+    display: block;
   }
 
   .scroll-video-stage .hero-overlay {
@@ -8366,7 +8554,7 @@ textarea:focus {
   .residence-outcome-map article,
   .operating-route-grid article,
   .stop-prevention-row,
-  .terra-detail-grid,
+  .reference-detail-grid,
   .case-study-note {
     grid-template-columns: 1fr !important;
   }
@@ -8656,7 +8844,7 @@ textarea:focus {
   }
 }
 
-/* Final QA fix: Project Terra cards must never inherit the old table columns. */
+/* Final QA fix: reference cards must never inherit the old table columns. */
 .coordination-focus-map {
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   align-items: stretch;
@@ -10232,6 +10420,651 @@ textarea:focus {
     opacity: 0.09 !important;
     -webkit-mask-image: linear-gradient(0deg, #000 0%, transparent 100%) !important;
     mask-image: linear-gradient(0deg, #000 0%, transparent 100%) !important;
+  }
+}
+
+/* Visual QA pass: capability detail must never clip title or result cards. */
+.capability-detail {
+  grid-template-columns: minmax(260px, 0.46fr) minmax(0, 0.54fr) !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.capability-image {
+  min-width: 0 !important;
+  min-height: clamp(520px, 46vw, 680px) !important;
+}
+
+.capability-copy {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  padding: clamp(28px, 3vw, 44px) !important;
+}
+
+.capability-copy h3 {
+  max-width: min(100%, 12.8ch) !important;
+  font-size: clamp(2rem, 3.2vw, 3.3rem) !important;
+  line-height: 1.02 !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+.capability-copy > p:not(.eyebrow) {
+  max-width: min(100%, 48ch) !important;
+}
+
+.pain-outcome {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.pain-outcome div {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 20px !important;
+}
+
+.pain-outcome p {
+  max-width: 100% !important;
+  overflow-wrap: normal !important;
+  word-break: normal !important;
+}
+
+@media (max-width: 1320px) {
+  .capability-detail {
+    grid-template-columns: 1fr !important;
+  }
+
+  .capability-image {
+    height: clamp(300px, 36vw, 430px) !important;
+    min-height: 0 !important;
+  }
+
+  .capability-copy h3 {
+    max-width: 16ch !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .capability-copy {
+    padding: 20px !important;
+  }
+
+  .capability-copy h3 {
+    max-width: 100% !important;
+    font-size: clamp(1.65rem, 8vw, 2.2rem) !important;
+  }
+
+  .pain-outcome {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Visual QA pass: give portfolio group text more breathing room. */
+.portfolio-pillar {
+  padding: clamp(30px, 3.4vw, 54px) !important;
+}
+
+.portfolio-pillar .portfolio-group-grid {
+  gap: clamp(18px, 2vw, 26px) !important;
+}
+
+.portfolio-pillar .portfolio-group {
+  gap: 18px !important;
+  padding: clamp(28px, 2.7vw, 42px) !important;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(246, 252, 250, 0.9)) !important;
+}
+
+.portfolio-group-index {
+  margin-bottom: 2px !important;
+}
+
+.portfolio-pillar .portfolio-group h4 {
+  max-width: 18ch !important;
+  margin-bottom: 4px !important;
+  font-size: clamp(1.08rem, 1.45vw, 1.34rem) !important;
+  line-height: 1.16 !important;
+}
+
+.portfolio-pillar .portfolio-group ul {
+  gap: 12px !important;
+  padding-bottom: 14px !important;
+}
+
+.portfolio-pillar .portfolio-group li {
+  padding-left: 26px !important;
+  max-width: 48ch !important;
+  font-size: clamp(0.96rem, 1vw, 1.04rem) !important;
+  line-height: 1.58 !important;
+}
+
+.portfolio-pillar .portfolio-group li::before {
+  left: 2px !important;
+  top: 0.68em !important;
+}
+
+.portfolio-pillar-visual {
+  opacity: 0.1 !important;
+  filter: saturate(0.72) contrast(0.92) !important;
+}
+
+.portfolio-pillar:hover .portfolio-pillar-visual {
+  opacity: 0.16 !important;
+}
+
+@media (max-width: 760px) {
+  .portfolio-pillar {
+    padding: 22px !important;
+    padding-bottom: clamp(150px, 42vw, 220px) !important;
+  }
+
+  .portfolio-pillar .portfolio-group {
+    padding: 24px !important;
+  }
+
+  .portfolio-pillar .portfolio-group h4 {
+    max-width: 100% !important;
+  }
+}
+
+/* Visual QA pass: supply system needs clear horizontal visuals, not vertical crops. */
+.system-detail {
+  grid-template-columns: 1fr !important;
+  min-height: 0 !important;
+}
+
+.system-image {
+  width: 100% !important;
+  min-height: 0 !important;
+  height: clamp(290px, 31vw, 430px) !important;
+  aspect-ratio: 16 / 7 !important;
+}
+
+.system-image img {
+  object-position: center !important;
+  filter: saturate(0.9) contrast(0.96) brightness(1.07) !important;
+}
+
+.system-detail:hover .system-image img {
+  filter: saturate(0.96) contrast(1) brightness(1.08) !important;
+}
+
+.system-copy {
+  align-content: start !important;
+  padding: clamp(28px, 3vw, 44px) !important;
+}
+
+.system-copy h3 {
+  max-width: min(100%, 17ch) !important;
+}
+
+@media (max-width: 760px) {
+  .system-image {
+    height: clamp(220px, 54vw, 310px) !important;
+  }
+}
+
+/* Visual QA pass: About proof cards must keep copy in a readable column. */
+.about-us-page .two-col {
+  grid-template-columns: minmax(360px, 0.85fr) minmax(520px, 1fr) !important;
+  gap: clamp(44px, 6vw, 96px) !important;
+  align-items: start !important;
+}
+
+.about-us-page .about-proof-grid {
+  grid-template-rows: none !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: clamp(16px, 1.5vw, 22px) !important;
+}
+
+.about-us-page .about-proof-grid article {
+  grid-template-columns: 34px minmax(0, 1fr) !important;
+  align-content: start !important;
+  min-height: 260px !important;
+  padding: clamp(26px, 2.5vw, 38px) !important;
+}
+
+.about-us-page .about-proof-grid svg {
+  grid-column: 1 !important;
+  grid-row: 1 / span 2 !important;
+  margin: 2px 0 0 !important;
+}
+
+.about-us-page .about-proof-grid h3,
+.about-us-page .about-proof-grid p {
+  grid-column: 2 !important;
+  min-width: 0 !important;
+}
+
+.about-us-page .about-proof-grid h3 {
+  max-width: 18ch !important;
+  margin: 0 0 16px !important;
+  font-size: clamp(1.42rem, 2vw, 2rem) !important;
+  line-height: 1.08 !important;
+}
+
+.about-us-page .about-proof-grid p {
+  max-width: 42ch !important;
+  font-size: clamp(1rem, 1.05vw, 1.08rem) !important;
+  line-height: 1.62 !important;
+}
+
+@media (max-width: 1180px) {
+  .about-us-page .two-col {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-us-page .about-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .about-us-page .about-proof-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-us-page .about-proof-grid article {
+    min-height: 0 !important;
+    padding: 24px !important;
+  }
+
+  .about-us-page .about-proof-grid h3 {
+    max-width: 100% !important;
+  }
+
+  .about-us-page .about-proof-grid p {
+    max-width: 100% !important;
+  }
+}
+
+/* Visual QA pass: About hero proof cards should read like premium notes, not narrow columns. */
+.about-us-page .section:first-child {
+  padding-top: clamp(150px, 13vw, 230px) !important;
+}
+
+.about-us-page .section:first-child .two-col {
+  grid-template-columns: minmax(0, 0.78fr) minmax(460px, 0.72fr) !important;
+  gap: clamp(52px, 7vw, 118px) !important;
+}
+
+.about-us-page .section:first-child h1 {
+  max-width: 10.8ch !important;
+  font-size: clamp(4.15rem, 6.25vw, 6.9rem) !important;
+  line-height: 0.98 !important;
+}
+
+.about-us-page .section:first-child .hero-lede {
+  max-width: 62ch !important;
+}
+
+.about-us-page .section:first-child .about-proof-grid {
+  grid-template-columns: 1fr !important;
+  gap: 16px !important;
+}
+
+.about-us-page .section:first-child .about-proof-grid article {
+  grid-template-columns: 42px minmax(0, 1fr) !important;
+  min-height: 0 !important;
+  column-gap: 22px !important;
+  padding: clamp(24px, 2.2vw, 34px) !important;
+}
+
+.about-us-page .section:first-child .about-proof-grid h3 {
+  max-width: none !important;
+  font-size: clamp(1.42rem, 1.75vw, 1.82rem) !important;
+  line-height: 1.12 !important;
+}
+
+.about-us-page .section:first-child .about-proof-grid p {
+  max-width: 58ch !important;
+  font-size: clamp(0.98rem, 1vw, 1.04rem) !important;
+  line-height: 1.62 !important;
+}
+
+@media (max-width: 1240px) {
+  .about-us-page .section:first-child .two-col {
+    grid-template-columns: 1fr !important;
+  }
+
+  .about-us-page .section:first-child h1 {
+    max-width: 12ch !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-us-page .section:first-child {
+    padding-top: 118px !important;
+  }
+
+  .about-us-page .section:first-child h1 {
+    max-width: calc(100vw - 48px) !important;
+    font-size: clamp(1.55rem, 7vw, 2rem) !important;
+    line-height: 1.12 !important;
+  }
+
+  .about-us-page .section:first-child .hero-line,
+  .about-us-page .section:first-child .lede-line {
+    display: block;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid article {
+    grid-template-columns: 1fr !important;
+    width: min(100%, calc(100vw - 32px)) !important;
+    max-width: min(100%, calc(100vw - 32px)) !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid svg,
+  .about-us-page .section:first-child .about-proof-grid h3,
+  .about-us-page .section:first-child .about-proof-grid p {
+    grid-column: 1 !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid h3 {
+    font-size: clamp(1rem, 5.4vw, 1.22rem) !important;
+    line-height: 1.18 !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid p {
+    max-width: 22ch !important;
+    font-size: 0.98rem !important;
+    line-height: 1.55 !important;
+  }
+}
+
+/* Visual QA pass: remove decorative connector lines that escape or cross cards. */
+.operating-control-strip {
+  overflow: visible !important;
+}
+
+.operating-control-strip article {
+  overflow: hidden !important;
+}
+
+.operating-control-strip article::before {
+  display: none !important;
+}
+
+.operating-control-strip > div::after {
+  opacity: 0.82 !important;
+}
+
+.stop-prevention-row {
+  overflow: hidden !important;
+}
+
+.stop-prevention-row::after {
+  display: none !important;
+}
+
+.portfolio-decision-strip article::after,
+.supply-flow-rail::before {
+  display: none !important;
+}
+
+.portfolio-decision-strip article,
+.supply-flow-step {
+  overflow: hidden !important;
+}
+
+.portfolio-decision-strip article {
+  border-top: 3px solid rgba(7, 107, 96, 0.74) !important;
+}
+
+.portfolio-decision-strip article:nth-child(2) {
+  border-top-color: rgba(89, 119, 83, 0.72) !important;
+}
+
+.portfolio-decision-strip article:nth-child(3) {
+  border-top-color: rgba(199, 149, 67, 0.68) !important;
+}
+
+.supply-flow-step {
+  border-top: 3px solid rgba(7, 107, 96, 0.72) !important;
+}
+
+.supply-flow-step:nth-child(2),
+.supply-flow-step:nth-child(3) {
+  border-top-color: rgba(7, 107, 96, 0.6) !important;
+}
+
+.supply-flow-step:nth-child(4),
+.supply-flow-step:nth-child(5) {
+  border-top-color: rgba(199, 149, 67, 0.56) !important;
+}
+
+/* Performance pass: keep rich sections smooth while we add more imagery and final videos. */
+@supports (content-visibility: auto) {
+  .section {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+
+  .contact-section,
+  .section:first-of-type {
+    contain-intrinsic-size: auto;
+  }
+}
+
+.capability-detail,
+.civil-service-detail,
+.portfolio-pillar,
+.civil-value-table article,
+.coordination-focus-map article,
+.residence-operating-model article,
+.residence-outcome-map article,
+.supply-flow-step,
+.solution-card {
+  contain: layout paint;
+}
+
+.card-background-visual,
+.portfolio-pillar-visual,
+.focus-card-visual,
+.solution-card-visual,
+.capability-image img,
+.civil-service-image img,
+.system-image img {
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .civil-hero-video,
+  .scroll-hero-video {
+    display: none !important;
+  }
+}
+
+/* Mobile QA pass: old matrix components must stack instead of forcing horizontal scroll. */
+@media (max-width: 760px) {
+  .residence-matrix,
+  .coverage-matrix-card {
+    overflow-x: visible !important;
+    scrollbar-gutter: auto !important;
+    touch-action: pan-y !important;
+  }
+
+  .matrix-row,
+  .coverage-matrix-head,
+  .coverage-row {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .matrix-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  .matrix-row span,
+  .coverage-row span {
+    border-left: 0 !important;
+    border-top: 1px solid var(--line);
+  }
+
+  .matrix-row span:first-child,
+  .coverage-row span:first-child {
+    border-top: 0;
+  }
+}
+
+/* Gateway QA pass: keep the three primary solution cards balanced on desktop. */
+.gateway-solutions .solution-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-auto-rows: auto !important;
+  align-items: stretch;
+}
+
+.gateway-solutions .solution-card,
+.gateway-solutions .solution-card:nth-child(1),
+.gateway-solutions .solution-card:nth-child(2),
+.gateway-solutions .solution-card:nth-child(3) {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  min-height: clamp(500px, 38vw, 580px);
+}
+
+.gateway-solutions .solution-card:nth-child(2) .solution-role,
+.gateway-solutions .solution-card:nth-child(3) .solution-role {
+  min-height: 96px;
+}
+
+.gateway-solutions .solution-card:nth-child(2) .solution-scope,
+.gateway-solutions .solution-card:nth-child(3) .solution-scope {
+  grid-template-columns: 1fr;
+  gap: 10px;
+  padding: 20px 0;
+}
+
+.gateway-solutions .solution-card:nth-child(2) .solution-outcome,
+.gateway-solutions .solution-card:nth-child(3) .solution-outcome {
+  margin: 20px 0 28px;
+}
+
+@media (max-width: 1100px) {
+  .gateway-solutions .solution-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  .gateway-solutions .solution-card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .gateway-solutions .solution-card,
+  .gateway-solutions .solution-card:nth-child(1),
+  .gateway-solutions .solution-card:nth-child(2),
+  .gateway-solutions .solution-card:nth-child(3) {
+    min-height: 0 !important;
+  }
+
+  .gateway-solutions .solution-card:nth-child(2) .solution-role,
+  .gateway-solutions .solution-card:nth-child(3) .solution-role {
+    min-height: 0;
+  }
+}
+
+/* Phase 4 mobile QA: About copy must never run past the viewport. */
+@media (max-width: 760px) {
+  .about-us-page .section:first-child,
+  .about-us-page .section:first-child .page-grid,
+  .about-us-page .section:first-child .two-col,
+  .about-us-page .section:first-child .about-proof-grid {
+    min-width: 0 !important;
+    overflow-x: clip !important;
+  }
+
+  .about-us-page .section:first-child .page-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: auto !important;
+    padding-inline: 20px !important;
+  }
+
+  .about-us-page .section:first-child .two-col,
+  .about-us-page .section:first-child .about-proof-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .about-us-page .hero-line,
+  .about-us-page .lede-line {
+    display: block !important;
+  }
+
+  .about-us-page .section:first-child h1,
+  .about-us-page .section:first-child .hero-lede {
+    width: 100% !important;
+    max-width: 350px !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  .about-us-page .section:first-child h1 {
+    max-width: 350px !important;
+    font-size: clamp(1.72rem, 7.4vw, 2.08rem) !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid h3,
+  .about-us-page .section:first-child .about-proof-grid p {
+    width: auto !important;
+    min-width: 0 !important;
+    overflow-wrap: break-word !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid article {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 22px 20px !important;
+    overflow: hidden !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid h3 {
+    max-width: 22ch !important;
+    font-size: clamp(1rem, 5vw, 1.18rem) !important;
+    line-height: 1.18 !important;
+  }
+
+  .about-us-page .section:first-child .about-proof-grid p {
+    max-width: 30ch !important;
+    font-size: 0.94rem !important;
+    line-height: 1.56 !important;
+  }
+}
+
+/* Language switch QA: keep the mobile header controls inside the viewport. */
+@media (max-width: 980px) {
+  .mobile-language-switch.language-switch {
+    position: fixed !important;
+    top: 18px !important;
+    left: 58px !important;
+    right: auto !important;
+    z-index: 70 !important;
+    display: inline-grid !important;
+    width: 62px !important;
+    min-width: 62px !important;
+    min-height: 42px !important;
+    padding: 3px !important;
+  }
+
+  .mobile-language-switch.language-switch span {
+    min-height: 34px !important;
+    font-size: 0.62rem !important;
+  }
+
+  .mobile-menu-button {
+    display: grid !important;
+    position: fixed !important;
+    top: 18px !important;
+    right: 14px !important;
+    z-index: 70 !important;
+    border-color: rgba(7, 107, 96, 0.24) !important;
+    background: rgba(255, 255, 255, 0.72) !important;
   }
 }
 
