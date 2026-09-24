@@ -212,6 +212,250 @@ const ptTranslations: Record<string, string> = {
   "Mobilize": "Mobilizar",
 };
 
+const ptEditorialTranslations: Record<string, string> = {
+  "Construction, Supply & Operational Support": "Construção, fornecimento e apoio operacional",
+  "One coordination layer": "Uma só camada de coordenação",
+  "for projects that cannot": "para obras que não podem",
+  "afford": "suportar",
+  "fragmentation.": "dispersão.",
+  "Divin Solutions connects construction supply,": "A Divin Solutions liga fornecimento para construção,",
+  "civil infrastructure and operational support": "infraestrutura civil e apoio operacional",
+  "spaces for teams managing complex": "para equipas que gerem necessidades",
+  "site requirements.": "complexas em obra.",
+  "Build the infrastructure. Supply the site. Support the": "Construir a infraestrutura. Abastecer a obra. Apoiar as",
+  "people around it.": "equipas no terreno.",
+  "Three distinct business units, each solving a different operational layer around large construction and industrial projects.": "Três áreas de atuação, cada uma preparada para resolver uma camada operacional diferente em grandes obras e projetos industriais.",
+  "Executive Coordination": "Coordenação executiva",
+  "Three business units. One": "Três áreas de atuação. Uma",
+  "accountable project view.": "visão operacional clara.",
+  "Divin Solutions reduces the operational noise around large projects by connecting supply, civil works and industrial support under one partner. Each unit solves a specific project pressure and keeps responsibility clear for decision-makers.": "A Divin Solutions reduz o ruído operacional em grandes obras ao ligar fornecimento, trabalhos civis e apoio industrial através de um único parceiro. Cada área responde a uma pressão específica da obra e mantém a responsabilidade clara para quem decide.",
+  "When this is needed": "Quando faz falta",
+  "What Divin does": "O que a Divin coordena",
+  "Construction Supply": "Fornecimento para construção",
+  "Civil Construction": "Construção civil",
+  "Industrial Support": "Apoio industrial",
+  "Missing resources delay the work front.": "Recursos em falta atrasam a frente de trabalho.",
+  "Materials, machinery, documentation and delivery planning are coordinated through one channel.": "Materiais, equipamentos, documentação e planeamento de entregas são tratados por um só canal.",
+  "The site keeps moving with fewer supplier gaps.": "A obra mantém o ritmo com menos falhas de fornecimento.",
+  "Physical scopes block each other when execution is fragmented.": "Os trabalhos bloqueiam-se entre si quando a execução está dispersa.",
+  "Groundworks, drainage, utilities, foundations and technical handover move under one plan.": "Terraplenagens, drenagens, redes, fundações e entrega técnica avançam dentro do mesmo plano.",
+  "Infrastructure is delivered with clearer responsibility.": "A infraestrutura é entregue com responsabilidades mais claras.",
+  "Teams need places to live, work, store and operate near the project.": "As equipas precisam de espaços para viver, trabalhar, armazenar e operar perto da obra.",
+  "Accommodation, offices, warehouses, yards and day-to-day support are prepared before pressure builds.": "Alojamento, escritórios, armazéns, parques e apoio diário são preparados antes de a pressão aumentar.",
+  "People and logistics stay close to site.": "Pessoas e logística ficam próximas da obra.",
+  "How the control layer works": "Como funciona a camada de controlo",
+  "From first risk signal to uninterrupted site progress.": "Do primeiro sinal de risco à continuidade da obra.",
+  "Instead of waiting for a blocker to become a stoppage, Divin turns each signal into one coordinated operating path.": "Em vez de esperar que um bloqueio se transforme numa paragem, a Divin transforma cada sinal num percurso operacional coordenado.",
+  "Map a project path": "Mapear o percurso da obra",
+  "Need is identified": "Necessidade identificada",
+  "The project team sees what can stop progress before it becomes a delay.": "A equipa identifica o que pode travar o avanço antes de se tornar um atraso.",
+  "Divin coordinates": "A Divin coordena",
+  "The right supplier, civil crew, property or support path is activated.": "É ativado o fornecedor, equipa civil, espaço ou apoio certo.",
+  "Access is cleared": "Acesso desbloqueado",
+  "Documents, approvals, HSE records and handover requirements are prepared.": "Documentos, aprovações, registos HSE e requisitos de entrega ficam preparados.",
+  "Site receives": "A obra recebe",
+  "Resources, works or spaces are delivered around the real project schedule.": "Recursos, trabalhos ou espaços são entregues de acordo com o calendário real da obra.",
+  "Work continues": "A obra continua",
+  "Backup paths and daily support reduce stoppages and repeated calls.": "Alternativas e apoio diário reduzem paragens e chamadas repetidas.",
+  "Request Flow": "Fluxo de pedido",
+  "How Divin turns requests into": "Como a Divin transforma pedidos em",
+  "site-ready resources.": "recursos prontos para entrar em obra.",
+  "The value is operational clarity: identify the need, source the right resource, clear the paperwork, deliver it to site and keep a replacement path ready.": "O valor está na clareza operacional: identificar a necessidade, encontrar o recurso certo, tratar da documentação, entregar em obra e manter uma alternativa preparada.",
+  "Divin Supply OS": "Sistema de fornecimento Divin",
+  "Request to site-ready": "Do pedido à entrada em obra",
+  "Need": "Necessidade",
+  "Source": "Encontrar",
+  "Clear": "Validar",
+  "Deliver": "Entregar",
+  "Continue": "Dar continuidade",
+  "The site identifies what is missing before the work front stops.": "A obra identifica o que falta antes de a frente de trabalho parar.",
+  "Divin finds the material, equipment, service or support profile through one channel.": "A Divin encontra o material, equipamento, serviço ou perfil de apoio através de um único canal.",
+  "Documents, certificates, HSE records and access requirements are prepared before arrival.": "Documentos, certificados, registos HSE e requisitos de acesso ficam preparados antes da chegada.",
+  "Transport, unloading and handover are coordinated around the project schedule.": "Transporte, descarga e entrega são coordenados de acordo com o calendário da obra.",
+  "Replacement paths and support keep the site moving when requirements change.": "Alternativas e apoio mantêm a obra em movimento quando os requisitos mudam.",
+  "Fewer calls": "Menos chamadas",
+  "One partner filters supplier noise before it reaches the project team.": "Um parceiro filtra o ruído dos fornecedores antes de chegar à equipa da obra.",
+  "Fewer blockers": "Menos bloqueios",
+  "Paperwork and entry requirements are handled before resources arrive.": "Documentação e requisitos de entrada são tratados antes da chegada dos recursos.",
+  "Fewer stoppages": "Menos paragens",
+  "Materials, equipment and support move around the work front, not after it fails.": "Materiais, equipamento e apoio acompanham a frente de trabalho antes de ela falhar.",
+  "One contact": "Um contacto",
+  "One invoice": "Uma fatura",
+  "One accountable flow": "Um fluxo responsável",
+  "Supply System": "Sistema de fornecimento",
+  "One supply layer across": "Uma camada de fornecimento para",
+  "every site pillar.": "todos os pilares da obra.",
+  "This view connects the individual supply categories into one practical operating system: select a pillar to see what changes on site and what Divin coordinates behind it.": "Esta vista liga as categorias de fornecimento num sistema operacional prático: escolha um pilar para ver o que muda na obra e o que a Divin coordena por trás.",
+  "Most delays start before the work front": "Os atrasos começam antes da frente de trabalho",
+  "Materials that arrive before momentum breaks": "Materiais que chegam antes de o ritmo quebrar",
+  "Equipment capacity when the site needs it": "Equipamento disponível quando a obra precisa",
+  "Site infrastructure built for daily operation": "Infraestrutura de obra pronta para o dia a dia",
+  "Logistics and documentation under control": "Logística e documentação sob controlo",
+  "Waste and environmental flows managed": "Resíduos e ambiente tratados no fluxo da obra",
+  "Support that keeps resources usable": "Apoio que mantém os recursos operacionais",
+  "Workforce support when capacity changes": "Reforço de equipas quando a capacidade muda",
+  "One partner. One supply layer.": "Um parceiro. Uma camada de fornecimento.",
+  "Every work front depends on materials, machinery, documents and site resources arriving before momentum breaks.": "Cada frente de trabalho depende de materiais, máquinas, documentos e recursos a chegar antes de o ritmo quebrar.",
+  "Concrete, steel, timber, MEP supplies, tools, PPE and site consumables sourced through one partner.": "Betão, aço, madeira, materiais MEP, ferramentas, EPI e consumíveis de obra através de um só parceiro.",
+  "Heavy machinery, compact equipment, temporary power, lighting, pumps, compressors and handling support.": "Maquinaria pesada, equipamento compacto, energia temporária, iluminação, bombas, compressores e apoio à movimentação.",
+  "Modular offices, welfare units, sanitation, water, barriers, fencing and access support for daily site operation.": "Escritórios modulares, zonas de apoio, saneamento, água, barreiras, vedações e acessos para a operação diária.",
+  "Delivery planning, transport coordination, certificates, manuals, permits and HSE support.": "Planeamento de entregas, coordenação de transporte, certificados, manuais, licenças e apoio HSE.",
+  "Waste separation, certified collection and environmental records handled as part of site continuity.": "Separação de resíduos, recolha certificada e registos ambientais integrados na continuidade da obra.",
+  "Maintenance coordination, replacement equipment, low-carbon options, LED lighting and ESG-aligned choices.": "Coordenação de manutenção, equipamento de substituição, opções de baixo carbono, iluminação LED e escolhas alinhadas com ESG.",
+  "Labour support, operators, signallers, welders, pipefitters, electricians, cleaning and maintenance teams.": "Apoio de mão de obra, operadores, sinaleiros, soldadores, tubistas, eletricistas, limpeza e manutenção.",
+  "One coordinated layer around the resources, logistics and support your project needs to keep moving.": "Uma camada coordenada para recursos, logística e apoio necessários para manter a obra em andamento.",
+  "Scope type": "Tipo de âmbito",
+  "Supply pillar": "Pilar de fornecimento",
+  "Coordination mode": "Modo de coordenação",
+  "One channel": "Um só canal",
+  "Site effect": "Efeito em obra",
+  "Less delay risk": "Menor risco de atraso",
+  "Project Flow": "Fluxo da obra",
+  "From requirement to delivery with": "Da necessidade à entrega com",
+  "fewer moving parts.": "menos pontos soltos.",
+  "One coordination layer connects sourcing, logistics, documentation and operational support.": "Uma camada de coordenação liga sourcing, logística, documentação e apoio operacional.",
+  "Divin operating path": "Percurso operacional Divin",
+  "One request becomes one coordinated delivery route.": "Um pedido torna-se uma rota de entrega coordenada.",
+  "The project team does not need to chase suppliers, documents and site handoffs separately. Divin turns each requirement into a visible path from review to continuity.": "A equipa da obra não precisa de perseguir fornecedores, documentos e entregas separadamente. A Divin transforma cada requisito num percurso visível, da análise à continuidade.",
+  "Commercial Advantage": "Vantagem comercial",
+  "Fewer handoffs. Stronger": "Menos passagens de responsabilidade. Mais",
+  "operational control.": "controlo em obra.",
+  "Project teams gain one point of coordination across the resources required to keep the site active.": "As equipas ganham um ponto único de coordenação para os recursos necessários a manter a obra ativa.",
+  "Control effect": "Efeito de controlo",
+  "Less supplier noise. More site momentum.": "Menos ruído de fornecedores. Mais ritmo em obra.",
+  "Divin compresses multiple operational threads into one accountable view, so teams can make decisions faster and keep active work fronts supplied.": "A Divin reúne vários fluxos operacionais numa visão responsável, para que as equipas decidam mais depressa e mantenham as frentes de trabalho abastecidas.",
+  "coordination layer": "camada de coordenação",
+  "business units connected": "áreas ligadas",
+  "pressure points reduced": "pontos de pressão reduzidos",
+  "About Us": "Sobre nós",
+  "Divin Solutions": "Divin Solutions",
+  "coordinates the": "coordena a",
+  "operational layer": "camada operacional",
+  "around": "em torno de",
+  "complex": "obras",
+  "construction projects.": "complexas.",
+  "Divin Solutions evolved from construction": "A Divin Solutions nasceu da construção",
+  "and real-estate execution into a broader": "e da execução imobiliária e evoluiu para um",
+  "business partner for companies that need": "parceiro operacional para empresas que precisam de",
+  "resources, infrastructure and operational spaces": "recursos, infraestrutura e espaços operacionais",
+  "coordinated with commercial clarity.": "coordenados com clareza comercial.",
+  "Construction-native coordination": "Coordenação nascida em obra",
+  "Divin Solutions understands that delays often begin before execution: missing resources, incomplete documentation, unclear handoffs and fragmented supplier ownership.": "A Divin Solutions sabe que muitos atrasos começam antes da execução: recursos em falta, documentação incompleta, passagens pouco claras e responsabilidade dispersa entre fornecedores.",
+  "One accountable commercial layer": "Uma camada comercial responsável",
+  "The company connects supply, civil execution and operational spaces so project teams can reduce scattered communication and keep responsibility easier to track.": "A empresa liga fornecimento, execução civil e espaços operacionais para reduzir comunicação dispersa e tornar a responsabilidade mais fácil de acompanhar.",
+  "Built around active sites": "Pensada para obras ativas",
+  "Services are structured around practical site needs: materials, machinery, welfare infrastructure, logistics, HSE records, workforce support, civil works and accommodation.": "Os serviços são estruturados em torno das necessidades reais da obra: materiais, máquinas, infraestrutura de apoio, logística, registos HSE, reforço de equipas, trabalhos civis e alojamento.",
+  "Operational clarity for decision-makers": "Clareza operacional para decidir",
+  "The goal is to make complex project support easier to understand, source, approve and manage across large construction and industrial environments.": "O objetivo é tornar o apoio a projetos complexos mais fácil de perceber, contratar, aprovar e gerir em grandes ambientes de construção e indústria.",
+  "What We Coordinate": "O que coordenamos",
+  "Three service areas.": "Três áreas de serviço.",
+  "One operating mindset.": "Uma só forma de operar.",
+  "How We Work": "Como trabalhamos",
+  "A practical partner for project teams that need": "Um parceiro prático para equipas que precisam de",
+  "momentum.": "ritmo.",
+  "Divin Solutions is positioned for construction companies, industrial operators, developers and project teams that need support services to arrive ready, documented and coordinated.": "A Divin Solutions trabalha com construtoras, operadores industriais, promotores e equipas de projeto que precisam de serviços de apoio prontos, documentados e coordenados.",
+  "Understand": "Compreender",
+  "Structure": "Estruturar",
+  "Coordinate": "Coordenar",
+  "Mobilize": "Mobilizar",
+  "Clarify the project context, location, work fronts, timing and operational constraints.": "Clarificar contexto, localização, frentes de trabalho, timings e condicionantes operacionais.",
+  "Define which supply, civil or operational-space areas need coordination.": "Definir que áreas de fornecimento, construção civil ou espaços operacionais exigem coordenação.",
+  "Connect suppliers, documents, logistics, HSE requirements and handoff responsibilities.": "Ligar fornecedores, documentos, logística, requisitos HSE e responsabilidades de entrega.",
+  "Move resources, teams or spaces into place with clearer ownership and timing.": "Colocar recursos, equipas ou espaços no terreno com responsabilidade e timing mais claros.",
+  "Adapt the solution as project requirements, phases and risks change.": "Adaptar a solução à medida que requisitos, fases e riscos da obra mudam.",
+};
+
+const ptPortfolioTranslations: Record<string, string> = {
+  "Construction Materials & Consumables": "Materiais e consumíveis de obra",
+  "Structural, MEP and daily site essentials": "Estrutura, MEP e essenciais do dia a dia",
+  "Multiple small vendors create slow quoting, split deliveries and missing items on site.": "Vários pequenos fornecedores tornam as cotações lentas, dividem entregas e deixam artigos em falta na obra.",
+  "Fewer supplier touchpoints and better resource continuity.": "Menos pontos de contacto com fornecedores e maior continuidade de recursos.",
+  "Source core materials and daily consumables without scattering procurement across multiple vendors.": "Obter materiais principais e consumíveis diários sem dispersar compras por vários fornecedores.",
+  "Concrete, cement, aggregates and reinforcement": "Betão, cimento, agregados e armaduras",
+  "Steel, timber, pipes, valves, insulation and cables": "Aço, madeira, tubos, válvulas, isolamento e cabos",
+  "Tools, fixings, PPE, signage and consumables": "Ferramentas, fixações, EPI, sinalização e consumíveis",
+  "Equipment & Industrial Machinery": "Equipamento e maquinaria industrial",
+  "Machinery, temporary power and handling support": "Maquinaria, energia temporária e apoio à movimentação",
+  "Equipment gaps or downtime interrupt crews and delay planned work fronts.": "Falhas ou paragens de equipamento interrompem equipas e atrasam frentes de trabalho planeadas.",
+  "Faster mobilization and less downtime exposure.": "Mobilização mais rápida e menor exposição a paragens.",
+  "Mobilize machinery, power and handling equipment without restarting procurement every time scope changes.": "Mobilizar maquinaria, energia e equipamento de movimentação sem recomeçar compras sempre que o âmbito muda.",
+  "Rotary excavators, mini-excavators, dumpers and rollers": "Escavadoras rotativas, mini-escavadoras, dumpers e cilindros",
+  "Generators from 15kVA to mega-power and site boards": "Geradores de 15 kVA a alta potência e quadros de obra",
+  "Lighting towers, platforms, telehandlers, pumps and compressors": "Torres de iluminação, plataformas, telescópicas, bombas e compressores",
+  "Site Infrastructure & Welfare": "Infraestrutura de obra e bem-estar",
+  "Temporary infrastructure for daily operation": "Infraestrutura temporária para a operação diária",
+  "Sites lose operational quality when welfare, access and temporary infrastructure are treated as afterthoughts.": "A obra perde qualidade operacional quando bem-estar, acessos e infraestrutura temporária ficam para segundo plano.",
+  "Faster site setup and better daily working conditions.": "Instalação de obra mais rápida e melhores condições diárias de trabalho.",
+  "Set up the temporary infrastructure that keeps teams, workflows and access points organized from day one.": "Montar a infraestrutura temporária que mantém equipas, fluxos e acessos organizados desde o primeiro dia.",
+  "Office, meeting, canteen, changing and sanitary modules": "Módulos de escritório, reunião, refeitório, balneário e sanitários",
+  "Water tanks, booster pumps, septic tanks and maintenance": "Depósitos de água, grupos de pressão, fossas sépticas e manutenção",
+  "Fencing, blind panels, New Jersey barriers and gatehouses": "Vedações, painéis opacos, barreiras New Jersey e portarias",
+  "Logistics, Documentation & HSE": "Logística, documentação e HSE",
+  "Transport, certificates and compliance support": "Transporte, certificados e apoio à conformidade",
+  "A delivery can be physically ready and still be blocked by missing documents, certificates or compliance steps.": "Uma entrega pode estar fisicamente pronta e ainda assim ficar bloqueada por documentos, certificados ou passos de conformidade em falta.",
+  "Cleaner handoffs between procurement, site, transport and compliance teams.": "Passagens mais claras entre compras, obra, transporte e equipas de conformidade.",
+  "Coordinate the logistics and documentation layer that often decides whether resources can actually move.": "Coordenar a camada de logística e documentação que muitas vezes decide se os recursos podem realmente avançar.",
+  "Oversized cargo, unloading planning and crane-truck mobilisation": "Transporte especial, planeamento de descarga e mobilização de camião-grua",
+  "Manuals, CE certificates, lift plans and load schedules": "Manuais, certificados CE, planos de elevação e mapas de carga",
+  "Obralia, e-coordina, approvals, medical exams and training": "Obralia, e-coordina, aprovações, exames médicos e formação",
+  "Waste & Environmental Management": "Gestão de resíduos e ambiente",
+  "Controlled site flows and environmental records": "Fluxos de obra controlados e registos ambientais",
+  "Unmanaged waste and missing environmental records create stoppages and compliance risk.": "Resíduos sem gestão e registos ambientais em falta criam paragens e risco de incumprimento.",
+  "Cleaner site operations with environmental responsibilities tracked.": "Operações de obra mais limpas, com responsabilidades ambientais acompanhadas.",
+  "Keep waste flows and environmental records organized so the site stays operational and accountable.": "Manter fluxos de resíduos e registos ambientais organizados para que a obra continue operacional e responsável.",
+  "Skip containers and separation for timber, plastics and scrap metal": "Contentores e separação de madeira, plásticos e sucata metálica",
+  "Certified collection, e-GARs and waste tracking manifests": "Recolha certificada, e-GAR e guias de acompanhamento de resíduos",
+  "Technical Support & Sustainability": "Apoio técnico e sustentabilidade",
+  "Maintenance, replacement and future-ready options": "Manutenção, substituição e opções preparadas para o futuro",
+  "Sites need backup options when equipment fails, requirements change or sustainability expectations increase.": "As obras precisam de alternativas quando o equipamento falha, os requisitos mudam ou as metas de sustentabilidade aumentam.",
+  "More resilient operations and better alignment with modern procurement expectations.": "Operações mais resilientes e melhor alinhamento com expectativas modernas de contratação.",
+  "Add a support layer around your resources so the project can adapt when equipment, timelines or ESG requirements change.": "Adicionar uma camada de apoio aos recursos para que a obra se adapte quando mudam equipamentos, prazos ou requisitos ESG.",
+  "SLAs, 24/7 on-call support and rapid replacement": "SLA, apoio 24/7 e substituição rápida",
+  "Technical, mechanical and specialised assistance": "Assistência técnica, mecânica e especializada",
+  "Electric machinery, solar LED lighting and hybrid generators": "Maquinaria elétrica, iluminação LED solar e geradores híbridos",
+  "Workforce & Technical Profiles": "Equipas e perfis técnicos",
+  "Operational profiles for changing site capacity": "Perfis operacionais para capacidade variável em obra",
+  "Workforce needs fluctuate by phase, and missing profiles can block planned execution.": "As necessidades de mão de obra variam por fase, e perfis em falta podem bloquear a execução planeada.",
+  "Better capacity matching across changing project stages.": "Melhor ajuste de capacidade ao longo das fases da obra.",
+  "Support changing site capacity with operational profiles that can be mobilized around project needs.": "Apoiar variações de capacidade com perfis operacionais mobilizados conforme as necessidades da obra.",
+  "Labourers, assistants and support teams": "Serventes, ajudantes e equipas de apoio",
+  "Operators, signallers and certified profiles": "Operadores, sinaleiros e perfis certificados",
+  "Welders, pipefitters, electricians and maintenance teams": "Soldadores, tubistas, eletricistas e equipas de manutenção",
+  "Complete Supply System": "Sistema completo de fornecimento",
+  "One coordinated layer around project resources": "Uma camada coordenada em torno dos recursos da obra",
+  "Fragmented resource planning makes project continuity dependent on too many disconnected handoffs.": "O planeamento disperso de recursos torna a continuidade da obra dependente de demasiadas passagens desconectadas.",
+  "One operational view across materials, equipment, logistics and support.": "Uma visão operacional sobre materiais, equipamento, logística e apoio.",
+  "Connect the resources, logistics and support your project needs into one calmer supply layer.": "Ligar recursos, logística e apoio numa camada de fornecimento mais simples e controlada.",
+  "Preliminary Works & Site Setup": "Trabalhos preliminares e instalação de obra",
+  "Mobilization and temporary project infrastructure": "Mobilização e infraestrutura temporária da obra",
+  "Initial site preparation, temporary facilities, technical resources, documentation and HSE coordination.": "Preparação inicial da obra, instalações temporárias, recursos técnicos, documentação e coordenação HSE.",
+  "Substructures & Foundations": "Subestruturas e fundações",
+  "Excavation, structural concrete and technical bases": "Escavação, betão estrutural e bases técnicas",
+  "Footings, mass foundations, plinths, equipment pedestals, precast retaining walls and C40 concrete works.": "Sapatas, maciços, plintos, pedestais de equipamento, muros pré-fabricados de contenção e trabalhos em betão C40.",
+  "Structural Concrete Slabs": "Lajes estruturais em betão",
+  "Bases for tanks, generators and heavy equipment": "Bases para depósitos, geradores e equipamento pesado",
+  "Technical equipment bases with structural fill, formwork, reinforcement and high-resistance brushed finishes.": "Bases técnicas com aterro estrutural, cofragem, armadura e acabamento afagado de alta resistência.",
+  "Drainage Systems": "Sistemas de drenagem",
+  "Stormwater, wastewater and environmental separation": "Águas pluviais, residuais e separação ambiental",
+  "Buried networks, inspection chambers, ACO channels, environmental treatment units and CCTV inspection for controlled site drainage.": "Redes enterradas, caixas de visita, canais ACO, unidades de tratamento ambiental e inspeção CCTV para drenagem controlada.",
+  "Potable Water & Fire Networks": "Redes de água potável e incêndio",
+  "Hydrants, public connections and technical water supply": "Hidrantes, ligações públicas e abastecimento técnico de água",
+  "Fire and potable water networks designed to support industrial operations and critical site safety.": "Redes de incêndio e água potável preparadas para operações industriais e segurança crítica da obra.",
+  "Ducting & Electrical Services": "Tubagens técnicas e serviços elétricos",
+  "Telecommunications, power, lighting and protection": "Telecomunicações, energia, iluminação e proteção",
+  "Critical telecom, low/medium-voltage, lighting, CCTV, earthing and lightning-protection infrastructure.": "Infraestrutura crítica de telecomunicações, baixa/média tensão, iluminação, CCTV, terras e proteção contra descargas atmosféricas.",
+  "Technical Utility Infrastructure": "Infraestrutura técnica de utilidades",
+  "Tanks, industrial pipework and containment": "Depósitos, tubagem industrial e contenção",
+  "Industrial utility corridors, chambers and reinforced equipment-support structures delivered with clear technical control.": "Corredores de utilidades industriais, câmaras e estruturas reforçadas de suporte a equipamentos com controlo técnico claro.",
+  "Kerbs & Tactile Paving": "Lancis e pavimento tátil",
+  "Accessible, precise urban infrastructure": "Infraestrutura exterior acessível e precisa",
+  "Precast kerbs, dropped crossings and tactile paving installed for durability, accessibility and compliance.": "Lancis pré-fabricados, passagens rebaixadas e pavimento tátil instalados com durabilidade, acessibilidade e conformidade.",
+  "Reference package": "Pacote de referência",
+  "Package role": "Função do pacote",
+  "Typical scope": "Âmbito típico",
+  "Execution focus": "Foco de execução",
+};
+
 const systemVisuals = [
   asset("scroll-frames/00-blueprint-start.webp"),
   asset("generated/supply-system/01-materials-clear.webp"),
@@ -297,7 +541,7 @@ const civilAssets = {
   heroVideo: asset("rebrand-light/civil/civil-hero-final-10s.mp4"),
   heroPoster: asset("rebrand-light/civil/civil-hero-final-10s-poster.webp"),
   boq: asset("rebrand-light/civil/civil-boq-planning.webp"),
-  caseStudy: asset("rebrand-light/civil/civil-project-terra.webp"),
+  caseStudy: asset("rebrand-light/civil/civil-reference-infrastructure.webp"),
 };
 
 const gatewayHeroStages = ["Fragmented", "Business units", "Coordination", "Control"];
@@ -717,7 +961,7 @@ function translateTextNode(node: Text, language: SiteLanguage) {
     return;
   }
 
-  const translated = ptTranslations[key];
+  const translated = ptPortfolioTranslations[key] ?? ptEditorialTranslations[key] ?? ptTranslations[key];
   if (!translated) return;
 
   const leading = original.match(/^\s*/)?.[0] ?? "";
@@ -819,7 +1063,7 @@ function Nav({ page }: { page: "home" | "supply" | "civil" | "accommodations" })
   return (
     <>
     <a className="skip-link" href="#main-content">Skip to main content</a>
-    <header className={compact ? "nav-shell nav-shell-compact" : "nav-shell"}>
+    <header className={`${compact ? "nav-shell nav-shell-compact" : "nav-shell"} ${open ? "nav-menu-open" : ""}`}>
       <a href="/" className="brand-symbol-link" aria-label="Divin Solutions home" data-no-translate>
         <span className="brand-symbol"><img src={brandLogo} alt="" decoding="async" /></span>
       </a>
@@ -898,12 +1142,14 @@ function PictureHero({ desktop, mobile, className = "" }: { desktop: string; mob
 function LinearScrollHero({
   className,
   video,
+  mobileVideo,
   poster,
   mobileFallback,
   children,
 }: {
   className: string;
   video: string;
+  mobileVideo?: string;
   poster: string;
   mobileFallback: string;
   stages?: string[];
@@ -916,6 +1162,7 @@ function LinearScrollHero({
     <section id="top" className={`scroll-video-hero ${className}`}>
       <div className="scroll-video-stage">
         <video ref={videoRef} className="scroll-hero-video" poster={poster} preload="metadata" autoPlay loop muted playsInline aria-hidden="true">
+          {mobileVideo ? <source media="(max-width: 760px)" src={mobileVideo} type="video/mp4" /> : null}
           <source media="(min-width: 761px)" src={video} type="video/mp4" />
         </video>
         <PictureHero desktop={poster} mobile={mobileFallback} className="scroll-hero-fallback" />
@@ -1390,12 +1637,14 @@ function Contact({ mode = "supply" }: { mode?: "supply" | "civil" | "accommodati
 
 function CivilHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const civilMobileVideo = (civilAssets as typeof civilAssets & { heroMobileVideo?: string }).heroMobileVideo;
   useControlledVideoPlayback(videoRef, civilAssets.heroVideo);
 
   return (
     <section id="top" className="scroll-video-hero civil-hero">
       <div className="scroll-video-stage">
         <video ref={videoRef} className="civil-hero-video" poster={civilAssets.heroPoster} preload="metadata" autoPlay loop muted playsInline aria-hidden="true">
+          {civilMobileVideo ? <source media="(max-width: 760px)" src={civilMobileVideo} type="video/mp4" /> : null}
           <source media="(min-width: 761px)" src={civilAssets.heroVideo} type="video/mp4" />
         </video>
         <PictureHero desktop={civilAssets.heroPoster} mobile={civilAssets.heroMobile} className="civil-hero-fallback" />

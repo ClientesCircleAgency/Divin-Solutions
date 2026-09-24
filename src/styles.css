@@ -614,6 +614,7 @@ h2 .copy-mark {
 
 .mobile-menu {
   position: fixed;
+  z-index: 90;
   inset: -16px -20px auto;
   display: grid;
   gap: 8px;
@@ -676,6 +677,7 @@ h2 .copy-mark {
 
 .mobile-close {
   position: absolute;
+  z-index: 95;
   top: 28px;
   right: 24px;
 }
@@ -10777,7 +10779,7 @@ textarea:focus {
 
 /* Visual QA pass: remove decorative connector lines that escape or cross cards. */
 .operating-control-strip {
-  overflow: visible !important;
+  overflow: hidden !important;
 }
 
 .operating-control-strip article {
@@ -10789,7 +10791,16 @@ textarea:focus {
 }
 
 .operating-control-strip > div::after {
-  opacity: 0.82 !important;
+  display: none !important;
+}
+
+.control-layer-path::before {
+  display: none !important;
+}
+
+.control-layer-brief span,
+.process-command-brief span {
+  color: rgba(255, 255, 255, 0.82) !important;
 }
 
 .stop-prevention-row {
@@ -11037,19 +11048,46 @@ textarea:focus {
   }
 }
 
-/* Language switch QA: keep the mobile header controls inside the viewport. */
+/* Language switch QA: keep mobile header controls aligned inside the nav bar. */
 @media (max-width: 980px) {
+  .nav-shell,
+  .nav-shell.nav-shell-compact {
+    top: calc(env(safe-area-inset-top, 0px) + 12px) !important;
+    left: 12px !important;
+    right: 12px !important;
+    grid-template-columns: 42px minmax(0, 1fr) 64px 48px !important;
+    gap: 8px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    padding: 8px 10px !important;
+  }
+
+  .brand-symbol-link {
+    grid-column: 1 !important;
+  }
+
+  .brand-wordmark {
+    grid-column: 2 !important;
+    justify-self: center !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    font-size: clamp(0.98rem, 4.8vw, 1.2rem) !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
   .mobile-language-switch.language-switch {
-    position: fixed !important;
-    top: 18px !important;
-    left: 58px !important;
-    right: auto !important;
-    z-index: 70 !important;
+    position: static !important;
+    grid-column: 3 !important;
+    justify-self: end !important;
+    z-index: 1 !important;
     display: inline-grid !important;
     width: 62px !important;
     min-width: 62px !important;
     min-height: 42px !important;
     padding: 3px !important;
+    background: rgba(255, 255, 255, 0.82) !important;
   }
 
   .mobile-language-switch.language-switch span {
@@ -11059,12 +11097,70 @@ textarea:focus {
 
   .mobile-menu-button {
     display: grid !important;
-    position: fixed !important;
-    top: 18px !important;
-    right: 14px !important;
-    z-index: 70 !important;
+    position: static !important;
+    grid-column: 4 !important;
+    justify-self: end !important;
+    z-index: 1 !important;
+    width: 44px !important;
+    height: 44px !important;
     border-color: rgba(7, 107, 96, 0.24) !important;
-    background: rgba(255, 255, 255, 0.72) !important;
+    background: rgba(255, 255, 255, 0.82) !important;
+  }
+
+  .nav-menu-open .mobile-menu-button {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .mobile-close {
+    top: calc(env(safe-area-inset-top, 0px) + 22px) !important;
+    right: 22px !important;
+    z-index: 2 !important;
+  }
+
+  .system-tabs,
+  .civil-service-tabs {
+    grid-auto-flow: row !important;
+    grid-template-columns: 1fr !important;
+    overflow-x: visible !important;
+    padding-right: 0 !important;
+  }
+
+  .system-tab,
+  .civil-service-tab {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .system-detail,
+  .capability-detail,
+  .civil-service-detail {
+    overflow: hidden !important;
+  }
+
+  .system-context-strip,
+  .civil-package-metrics {
+    grid-template-columns: 1fr !important;
+  }
+
+  .control-layer-showcase {
+    overflow: hidden !important;
+  }
+
+  .control-layer-path article {
+    grid-template-columns: 54px minmax(0, 1fr) !important;
+    gap: 16px !important;
+    min-height: 0 !important;
+    padding: 20px !important;
+  }
+
+  .control-layer-node {
+    width: 52px !important;
+    height: 52px !important;
+  }
+
+  .control-layer-brief {
+    min-height: 0 !important;
   }
 }
 
